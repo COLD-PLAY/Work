@@ -18,8 +18,7 @@ class Solution:
 # 4. Median of Two Sorted Arrays
 class Solution:
 	def findMedianSortedArrays(self, nums1, nums2) -> float:
-		l3 = nums1 + nums2
-		l3.sort()
+		l3 = sorted(nums1 + nums2)
 		return l3[len(l3) // 2] if len(l3) % 2 == 1 else (l3[len(l3) // 2 - 1] + l3[len(l3) // 2]) / 2
 
 # 7. Reverse Integer
@@ -333,7 +332,7 @@ class Solution:
 
 # 66. Plus One 65.75%
 class Solution:
-	def plusOne(self, digits: List[int]) -> List[int]:
+	def plusOne(self, digits):
 		num = 0
 		for i in range(len(digits)):
 			num = num * 10 + digits[i]
@@ -356,7 +355,7 @@ class Solution:
 
 # 15. 3Sum 借鉴的别人的很优秀的方法，牛皮 89.81%
 class Solution:
-	def threeSum(self, nums: List[int]) -> List[List[int]]:
+	def threeSum(self, nums):
 		res = []
 		nums.sort()
 		length = len(nums)
@@ -382,7 +381,7 @@ class Solution:
 
 # 16. 3Sum Closest 78.09%
 class Solution:
-	def threeSumClosest(self, nums: List[int], target: int) -> int:
+	def threeSumClosest(self, nums, target: int) -> int:
 		res = nums[0] + nums[1] + nums[2] - target
 		nums.sort()
 		length = len(nums)
@@ -396,3 +395,52 @@ class Solution:
 				elif diff > 0: r -= 1
 				else: l += 1
 		return res + target
+
+# 69. Sqrt(x)
+class Solution:
+	def mySqrt(self, x: int) -> int:
+		if x < 2: return x
+		l, r = 1, x // 2
+		while l < r:
+			m = (l + r) // 2
+			m_2 = m ** 2
+			if m_2 < x:
+				l = m + 1
+			else:
+				r = m
+		return l if l ** 2 <= x else l - 1
+
+# 17. Letter Combinations of a Phone Number
+class Solution:
+	def letterCombinations(self, digits: str):
+		phone = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
+			'6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+		if not digits:
+			return []
+
+		def helper(digits):
+			if not digits:
+				return ['']
+			return [c + c_ for c in phone[digits[0]]
+						for c_ in helper(digits[1:])]
+
+		return helper(digits)
+
+# 17. Letter Combinations of a Phone Number
+class Solution:
+	def letterCombinations(self, digits: str):
+		phone = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
+			'6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+		res = []
+		if not digits:
+			return []
+
+		def helper(res_, digits):
+			if not digits:
+				res.append(res_)
+			else:
+				for ch in phone[digits[0]]:
+					helper(res_ + ch, digits[1:])
+
+		helper('', digits)
+		return res
