@@ -444,3 +444,35 @@ class Solution:
 
 		helper('', digits)
 		return res
+
+# 83. Remove Duplicates from Sorted List 81.13%
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	def deleteDuplicates(self, head):
+		p = head
+		while p and p.next:
+			if p.val == p.next.val:
+				while p.next and p.val == p.next.val:
+					p.next = p.next.next
+			p = p.next
+		return head
+
+# 46. Permutations 63.19%
+class Solution:
+	def permute(self, nums):
+		res = []
+		def helper(res_, nums):
+			if len(nums) == 0:
+				res.append(res_)
+			else:
+				for i in range(len(nums)):
+					res__ = list(res_)
+					res__.append(nums[i])
+					helper(res__, nums[:i] + nums[i + 1:])
+		helper([], nums)
+		return res
