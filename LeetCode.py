@@ -476,3 +476,45 @@ class Solution:
 					helper(res__, nums[:i] + nums[i + 1:])
 		helper([], nums)
 		return res
+
+# 38. Count and Say 77.51%
+class Solution:
+	def countAndSay(self, n: int) -> str:
+		if n == 1:
+			return '1'
+		res = self.countAndSay(n - 1)
+		res_ = ''
+		length = len(res)
+		i = 0
+		while i < length:
+			count = 1
+			while i + 1 < length and res[i] == res[i + 1]:
+				count += 1
+				i += 1
+			res_ = res_ + str(count) + res[i]
+			i += 1
+		return res_
+
+# Definition for singly-linked list.
+# class ListNode:
+# 	def __init__(self, x):
+# 		self.val = x
+# 		self.next = None
+
+# 19. Remove Nth Node From End of List 89.95%
+class Solution:
+	def removeNthFromEnd(self, head, n: int):
+		length = 0
+		p = head
+		while p:
+			length += 1
+			p = p.next
+		if length == n:
+			return head.next
+
+		p = head
+		while length - n - 1 > 0:
+			p = p.next
+			n += 1
+		p.next = p.next.next
+		return head
