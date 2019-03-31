@@ -448,7 +448,7 @@ class Solution:
 # 83. Remove Duplicates from Sorted List 81.13%
 # Definition for singly-linked list.
 # class ListNode:
-#     def __init__(self, x):
+#	 def __init__(self, x):
 #		self.val = x
 #		self.next = None
 
@@ -518,3 +518,43 @@ class Solution:
 			n += 1
 		p.next = p.next.next
 		return head
+
+# 88. Merge Sorted Array 70.51%
+class Solution:
+	def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+		"""
+		Do not return anything, modify nums1 in-place instead.
+		"""
+		i = m + n - 1
+		while i >= n:
+			nums1[i] = nums1[i - n]
+			i -= 1
+		i = 0
+		j = 0
+		k = 0
+		while i < m and j < n:
+			if nums1[n + i] < nums2[j]:
+				nums1[k] = nums1[n + i]
+				i += 1
+			else:
+				nums1[k] = nums2[j]
+				j += 1
+			k += 1
+
+		while j < n:
+			nums1[k] = nums2[j]
+			j += 1
+			k += 1
+
+# Definition for a binary tree node.
+# class TreeNode:
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+# 100. Same Tree 75.97%
+class Solution:
+	def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
+		if p is None and q is None: return True
+		if p is None or q is None: return False
+		return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
