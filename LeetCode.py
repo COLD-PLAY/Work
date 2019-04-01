@@ -558,3 +558,41 @@ class Solution:
 		if p is None and q is None: return True
 		if p is None or q is None: return False
 		return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
+# 118. Pascal's Triangle 73.01%
+class Solution:
+	def generate(self, numRows: int) -> List[List[int]]:
+		res = []
+		for i in range(1, numRows + 1):
+			res_ = []
+			for j in range(i):
+				res_.append(1 if j == 0 or j == i - 1 else res[-1][j] + res[-1][j - 1])
+			res.append(res_)
+		return res
+
+# 18. 4Sum 18.30%
+class Solution:
+	def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+		nums.sort()
+		length = len(nums)
+		res = []
+		for i in range(length - 3):
+			if i > 0 and nums[i] == nums[i - 1]: continue
+			if nums[i] + nums[i + 1] + nums[i + 2] > target and nums[i + 3] >= 0: break
+			for j in range(i + 1, length - 2):
+				if j > i + 1 and nums[j] == nums[j - 1]: continue
+				l = j + 1
+				r = length - 1
+				while l < r:
+					if nums[i] + nums[j] + nums[l] + nums[r] < target:
+						l += 1
+					elif nums[i] + nums[j] + nums[l] + nums[r] > target:
+						r -= 1
+					else:
+						res.append([nums[i], nums[j], nums[l], nums[r]])
+						while l < r and nums[l] == nums[l + 1]: l += 1
+						while l < r and nums[r] == nums[r - 1]: r -= 1
+						l += 1
+						r -= 1
+
+		return res
