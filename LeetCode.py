@@ -596,3 +596,35 @@ class Solution:
 						r -= 1
 
 		return res
+
+# 136. Single Number 46.30%
+class Solution:
+	def singleNumber(self, nums: List[int]) -> int:
+		res = 0
+		for num in nums:
+			res ^= num
+		return res
+
+# 36. Valid Sudoku 63.93%
+class Solution:
+	def isValidSudoku(self, board: List[List[str]]) -> bool:
+		board_ = []
+		for i in range(9):
+			board_row = []
+			board_column = []
+			board_box = []
+			for j in range(9):
+				if board[i][j] != '.':
+					board_row.append(board[i][j])
+				if board[j][i] != '.':
+					board_column.append(board[j][i])
+				if board[i // 3 * 3 + j // 3][i % 3 * 3 + j % 3] != '.':
+					board_box.append(board[i // 3 * 3 + j // 3][i % 3 * 3 + j % 3])
+			board_.append(board_row)
+			board_.append(board_column)
+			board_.append(board_box)
+
+		for _ in board_:
+			if len(_) != len(set(_)):
+				return False
+		return True
