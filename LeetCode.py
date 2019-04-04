@@ -628,3 +628,110 @@ class Solution:
 			if len(_) != len(set(_)):
 				return False
 		return True
+
+# 141. Linked List Cycle
+# Definition for singly-linked list.
+# class ListNode(object):
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.next = None
+
+class Solution(object): # hash table 5.27%
+	def hasCycle(self, head):
+		"""
+		:type head: ListNode
+		:rtype: bool
+		"""
+		nodes = []
+		while head is not None:
+			if head in nodes:
+				return True
+			else:
+				nodes.append(head)
+			head = head.next
+		return False
+
+class Solution(object): # two pointer 70.05%
+	def hasCycle(self, head):
+		"""
+		:type head: ListNode
+		:rtype: bool
+		"""
+		if not head or not head.next: return False
+		slow = head
+		fast = head.next
+
+		while slow != fast:
+			if not fast or not fast.next: return False
+			slow = slow.next
+			fast = fast.next.next
+			
+		return True
+
+# 24. Swap Nodes in Pairs
+# Definition for singly-linked list.
+# class ListNode(object):
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.next = None
+
+class Solution(object): # 71.44% 
+	def swapPairs(self, head):
+		"""
+		:type head: ListNode
+		:rtype: ListNode
+		"""
+		if not head or not head.next: return head
+		p = head
+		q = p.next
+		res = q
+		while p and q:
+			pre = p
+			p.next = q.next
+			q.next = p
+			p = p.next
+			q = p.next if p else None
+			pre.next = q if q else p
+		return res
+
+class Solution(object): # recursion 71.44%
+	def swapPairs(self, head):
+		"""
+		:type head: ListNode
+		:rtype: ListNode
+		"""
+		if not head or not head.next: return head
+		p = head.next
+		head.next = self.swapPairs(p.next)
+		p.next = head
+		return p
+
+# 67. Add Binary 71.41%
+class Solution(object):
+	def addBinary(self, a, b):
+		"""
+		:type a: str
+		:type b: str
+		:rtype: str
+		"""
+		def helper(res, a, b, c):
+			if len(a) == 0 and len(b) == 0:
+				return ('1' if c else '') + res
+			c, d = divmod(c + (1 if len(a) and a[-1] == '1' else 0) + (1 if len(b) and b[-1] == '1' else 0), 2)
+			return helper(('1' if d else '0') + res, a[:-1], b[:-1], c)
+		res = helper('', a, b, 0)
+		return res
+
+# 29. Divide Two Integers 100.00%
+class Solution(object):
+	def divide(self, dividend, divisor):
+		"""
+		:type dividend: int
+		:type divisor: int
+		:rtype: int
+		"""
+		# overflow situation
+		if dividend == -2147483648 and divisor == -1:
+			return 2147483647
+		res, rem = divmod(dividend, divisor)
+		return res + 1 if res < 0 and rem else res

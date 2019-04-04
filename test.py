@@ -76,3 +76,16 @@ def isValidSudoku(board):
 #   [".",".",".",".","8",".",".","7","9"]
 # ]
 # isValidSudoku(board)
+# b = 1
+# a = 2
+# a += 1 if b else 0
+# print(a)
+
+def helper(res, a, b, c):
+	print('res: %s' % res)
+	if len(a) == 0 and len(b) == 0:
+		return ('1' if c else '') + res
+	
+	d = (c + (1 if len(a) and a[-1] == '1' else 0) + (1 if len(b) and b[-1] == '1' else 0)) % 2
+	c = (c + (1 if len(a) and a[-1] == '1' else 0) + (1 if len(b) and b[-1] == '1' else 0)) // 2
+	return helper(('1' if d else '0') + res, a[:-1], b[:-1], c)
