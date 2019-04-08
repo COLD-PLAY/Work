@@ -735,3 +735,94 @@ class Solution(object):
 			return 2147483647
 		res, rem = divmod(dividend, divisor)
 		return res + 1 if res < 0 and rem else res
+
+# 167. Two Sum II - Input array is sorted 80.69%
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        l = 0
+        r = len(numbers) - 1
+        while l < r:
+            if numbers[l] + numbers[r] < target:
+                while l < r and numbers[l + 1] == numbers[l]:
+                    l += 1
+                l += 1
+            elif numbers[l] + numbers[r] > target:
+                while l < r and numbers[r - 1] == numbers[r]:
+                    r -= 1
+                r -= 1
+            else:
+                return [l + 1, r + 1]
+
+# 75. Sort Colors 65.04%
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        length = len(nums)
+        times = [0, 0, 0]
+        for i in range(length):
+            times[nums[i]] += 1
+        k = 0
+        for i in range(3):
+            for j in range(times[i]):
+                nums[k] = i
+                k += 1
+class Solution: # 97.96% 双指针
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        i, l, r = 0, 0, len(nums) - 1
+        while i <= r:
+            if nums[i] == 0:
+                nums[i], nums[l] = nums[l], nums[i]
+                l += 1
+            if nums[i] == 2:
+                nums[i], nums[r] = nums[r], nums[i]
+                r -= 1
+                i -= 1
+            i += 1
+
+# 125. Valid Palindrome 99.95%
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        from string import punctuation
+        for ch in punctuation:
+            s = s.replace(ch, '')
+        s = s.replace(' ', '')
+        return s.lower() == s.lower()[::-1]
+
+# 22. Generate Parentheses 57.81%
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        if n == 1:
+            return ['()']
+        res = []
+        for s in self.generateParenthesis(n - 1):
+            for i in range(len(s)):
+                res_ = s[:i] + '()' + s[i:]
+                res.append(res_)
+        return list(set(res))
+
+# 278. First Bad Version 67.87%
+# The isBadVersion API is already defined for you.
+# @param version, an integer
+# @return a bool
+# def isBadVersion(version):
+
+class Solution:
+    def firstBadVersion(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n < 2: return n
+        l, r = 1, n
+        while l < r:
+            m = (l + r) // 2
+            if isBadVersion(m):
+                r = m
+            else:
+                l = m + 1
+        return l
