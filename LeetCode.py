@@ -738,72 +738,72 @@ class Solution(object):
 
 # 167. Two Sum II - Input array is sorted 80.69%
 class Solution:
-    def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        l = 0
-        r = len(numbers) - 1
-        while l < r:
-            if numbers[l] + numbers[r] < target:
-                while l < r and numbers[l + 1] == numbers[l]:
-                    l += 1
-                l += 1
-            elif numbers[l] + numbers[r] > target:
-                while l < r and numbers[r - 1] == numbers[r]:
-                    r -= 1
-                r -= 1
-            else:
-                return [l + 1, r + 1]
+	def twoSum(self, numbers: List[int], target: int) -> List[int]:
+		l = 0
+		r = len(numbers) - 1
+		while l < r:
+			if numbers[l] + numbers[r] < target:
+				while l < r and numbers[l + 1] == numbers[l]:
+					l += 1
+				l += 1
+			elif numbers[l] + numbers[r] > target:
+				while l < r and numbers[r - 1] == numbers[r]:
+					r -= 1
+				r -= 1
+			else:
+				return [l + 1, r + 1]
 
 # 75. Sort Colors 65.04%
 class Solution:
-    def sortColors(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        length = len(nums)
-        times = [0, 0, 0]
-        for i in range(length):
-            times[nums[i]] += 1
-        k = 0
-        for i in range(3):
-            for j in range(times[i]):
-                nums[k] = i
-                k += 1
+	def sortColors(self, nums: List[int]) -> None:
+		"""
+		Do not return anything, modify nums in-place instead.
+		"""
+		length = len(nums)
+		times = [0, 0, 0]
+		for i in range(length):
+			times[nums[i]] += 1
+		k = 0
+		for i in range(3):
+			for j in range(times[i]):
+				nums[k] = i
+				k += 1
 class Solution: # 97.96% 双指针
-    def sortColors(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        i, l, r = 0, 0, len(nums) - 1
-        while i <= r:
-            if nums[i] == 0:
-                nums[i], nums[l] = nums[l], nums[i]
-                l += 1
-            if nums[i] == 2:
-                nums[i], nums[r] = nums[r], nums[i]
-                r -= 1
-                i -= 1
-            i += 1
+	def sortColors(self, nums: List[int]) -> None:
+		"""
+		Do not return anything, modify nums in-place instead.
+		"""
+		i, l, r = 0, 0, len(nums) - 1
+		while i <= r:
+			if nums[i] == 0:
+				nums[i], nums[l] = nums[l], nums[i]
+				l += 1
+			if nums[i] == 2:
+				nums[i], nums[r] = nums[r], nums[i]
+				r -= 1
+				i -= 1
+			i += 1
 
 # 125. Valid Palindrome 99.95%
 class Solution:
-    def isPalindrome(self, s: str) -> bool:
-        from string import punctuation
-        for ch in punctuation:
-            s = s.replace(ch, '')
-        s = s.replace(' ', '')
-        return s.lower() == s.lower()[::-1]
+	def isPalindrome(self, s: str) -> bool:
+		from string import punctuation
+		for ch in punctuation:
+			s = s.replace(ch, '')
+		s = s.replace(' ', '')
+		return s.lower() == s.lower()[::-1]
 
 # 22. Generate Parentheses 57.81%
 class Solution:
-    def generateParenthesis(self, n: int) -> List[str]:
-        if n == 1:
-            return ['()']
-        res = []
-        for s in self.generateParenthesis(n - 1):
-            for i in range(len(s)):
-                res_ = s[:i] + '()' + s[i:]
-                res.append(res_)
-        return list(set(res))
+	def generateParenthesis(self, n: int) -> List[str]:
+		if n == 1:
+			return ['()']
+		res = []
+		for s in self.generateParenthesis(n - 1):
+			for i in range(len(s)):
+				res_ = s[:i] + '()' + s[i:]
+				res.append(res_)
+		return list(set(res))
 
 # 278. First Bad Version 67.87%
 # The isBadVersion API is already defined for you.
@@ -812,17 +812,108 @@ class Solution:
 # def isBadVersion(version):
 
 class Solution:
-    def firstBadVersion(self, n):
-        """
-        :type n: int
-        :rtype: int
-        """
-        if n < 2: return n
-        l, r = 1, n
-        while l < r:
-            m = (l + r) // 2
-            if isBadVersion(m):
-                r = m
-            else:
-                l = m + 1
-        return l
+	def firstBadVersion(self, n):
+		"""
+		:type n: int
+		:rtype: int
+		"""
+		if n < 2: return n
+		l, r = 1, n
+		while l < r:
+			m = (l + r) // 2
+			if isBadVersion(m):
+				r = m
+			else:
+				l = m + 1
+		return l
+
+# 33. Search in Rotated Sorted Array 99.22%
+class Solution:
+	def search(self, nums: List[int], target: int) -> int:
+		if len(nums) == 0:
+			return -1
+
+		l, r = 0, len(nums) - 1
+		while l < r:
+			m = (l + r) // 2
+			if nums[m] == target:
+				return m
+			if nums[l] == target:
+				return l
+			if nums[r] == target:
+				return r
+						
+			elif nums[m] < target:
+				if nums[l] > target:
+					l = m + 1
+				else:
+					if nums[m] >= nums[l]:
+						l = m + 1
+					else:
+						r = m - 1
+			else:
+				if nums[l] < target:
+					r = m - 1
+				else:
+					if nums[m] >= nums[l]:
+						l = m + 1
+					else:
+						r = m - 1
+
+		return l if nums[l] == target else -1
+
+# 169. Majority Element
+class Solution: # 5.06%
+	def majorityElement(self, nums: List[int]) -> int:
+		if len(nums) < 3:
+			return nums[0]
+		r = 1
+		while r < len(nums):
+			while r < len(nums) and nums[r] == nums[0]: r += 1
+			if r < len(nums):
+				nums.pop(0)
+				r -= 1
+				nums.pop(r)
+		return nums[0]
+class Solution: # 40.58%
+	def majorityElement(self, nums: List[int]) -> int:
+		if len(nums) < 3:
+			return nums[0]
+		counter = {}
+		for num in nums:
+			if num not in counter.keys():
+				counter[num] = 1
+			else:
+				counter[num] += 1
+		length = len(nums)
+		for num in counter.keys():
+			if counter[num] > length // 2:
+				return num
+class Solution: # 67.32%
+	def majorityElement(self, nums: List[int]) -> int:
+		if len(nums) < 3:
+			return nums[0]
+		counter = 0
+		candidate = None
+		for num in nums:
+			if counter == 0:
+				candidate = num
+			counter += (1 if num == candidate else -1)
+		return candidate
+
+class Solution: # 99.51%
+	def majorityElement(self, nums: List[int]) -> int:
+		return sorted(nums)[len(nums)//2]
+
+# 215. Kth Largest Element in an Array
+class Solution: # without heap or hash 5.01%
+	def findKthLargest(self, nums: List[int], k: int) -> int:
+		length = len(nums)
+		for i in range(k):
+			for j in range(length - i - 1):
+				if nums[j] > nums[j + 1]:
+					nums[j], nums[j + 1] = nums[j + 1], nums[j]
+		return nums[-k]
+class Solution: # cheat 90.92%
+	def findKthLargest(self, nums: List[int], k: int) -> int:
+		return sorted(nums)[-k]

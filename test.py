@@ -89,3 +89,4 @@ def helper(res, a, b, c):
 	d = (c + (1 if len(a) and a[-1] == '1' else 0) + (1 if len(b) and b[-1] == '1' else 0)) % 2
 	c = (c + (1 if len(a) and a[-1] == '1' else 0) + (1 if len(b) and b[-1] == '1' else 0)) // 2
 	return helper(('1' if d else '0') + res, a[:-1], b[:-1], c)
+	
