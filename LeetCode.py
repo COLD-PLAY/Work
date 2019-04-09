@@ -918,3 +918,40 @@ class Solution: # cheat 90.92%
 	def findKthLargest(self, nums: List[int], k: int) -> int:
 		return sorted(nums)[-k]
 
+# 121. Best Time to Buy and Sell Stock
+class Solution(object): # 35.90%
+	def maxProfit(self, prices):
+		"""
+		:type prices: List[int]
+		:rtype: int
+		"""
+		if len(prices) < 2: return 0
+		min = prices[0]
+		max = 0
+		for price in prices:
+			if price - min > max: max = price - min
+			if price < min: min = price
+		return max
+
+# 62. Unique Paths
+class Solution(object):
+	def uniquePaths(self, m, n): # 14.98%
+		"""
+		:type m: int
+		:type n: int
+		:rtype: int
+		"""
+		if m == 1 or n == 1: return 1
+		dp = [[1 for _ in range(m)] for _ in range(n)]
+		for i in range(1, n):
+			for j in range(1, m):
+				dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+		return dp[n - 1][m - 1]
+class Solution(object): # 76.75%
+	def uniquePaths(self, m, n):
+		"""
+		:type m: int
+		:type n: int
+		:rtype: int
+		"""
+		return math.factorial(m+n-2)/math.factorial(m-1)/math.factorial(n-1)

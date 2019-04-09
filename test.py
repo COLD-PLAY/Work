@@ -90,3 +90,27 @@ def helper(res, a, b, c):
 	c = (c + (1 if len(a) and a[-1] == '1' else 0) + (1 if len(b) and b[-1] == '1' else 0)) // 2
 	return helper(('1' if d else '0') + res, a[:-1], b[:-1], c)
 	
+def maxProfit(prices):
+	"""
+	:type prices: List[int]
+	:rtype: int
+	"""
+	min = prices[0]
+	max = 0
+	for price in prices:
+		if price - min > max: max = price - min
+		if price < min: min = price
+	return max
+
+def uniquePaths(m, n):
+	"""
+	:type m: int
+	:type n: int
+	:rtype: int
+	"""
+	if m == 1 or n == 1: return 1
+	dp = [[1 for i in range(m)] for j in range(n)]
+	for i in range(1, n):
+		for j in range(1, m):
+			dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+	return dp[n - 1][m - 1]
