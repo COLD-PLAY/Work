@@ -917,3 +917,4 @@ class Solution: # without heap or hash 5.01%
 class Solution: # cheat 90.92%
 	def findKthLargest(self, nums: List[int], k: int) -> int:
 		return sorted(nums)[-k]
+
