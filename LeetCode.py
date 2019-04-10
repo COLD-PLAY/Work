@@ -955,3 +955,48 @@ class Solution(object): # 76.75%
 		:rtype: int
 		"""
 		return math.factorial(m+n-2)/math.factorial(m-1)/math.factorial(n-1)
+
+# 401. Binary Watch
+class Solution(object): # 54.13%
+	def readBinaryWatch(self, num):
+		"""
+		:type num: int
+		:rtype: List[str]
+		"""
+		return ['%d:%02d' % (h, m)
+				for h in range(12) for m in range(60)
+				if (bin(h) + bin(m)).count('1') == num]
+
+# 104. Maximum Depth of Binary Tree
+# Definition for a binary tree node.
+# class TreeNode(object):
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution(object): # recursion 41.52%
+	def maxDepth(self, root):
+		"""
+		:type root: TreeNode
+		:rtype: int
+		"""
+		if not root: return 0
+		return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+class Solution(object): # stack 41.52%
+	def maxDepth(self, root):
+		"""
+		:type root: TreeNode
+		:rtype: int
+		"""
+		if not root: return 0
+		stack = []
+		stack.append((1, root))
+		depth = 0
+		while stack != []:
+			cur_depth, root = stack.pop()
+			if root:
+				depth = max(cur_depth, depth)
+				stack.append((cur_depth + 1, root.left))
+				stack.append((cur_depth + 1, root.right))
+		return depth
