@@ -1000,3 +1000,42 @@ class Solution(object): # stack 41.52%
 				stack.append((cur_depth + 1, root.left))
 				stack.append((cur_depth + 1, root.right))
 		return depth
+
+# 1021. Remove Outermost Parentheses
+class Solution(object): # 62.88%
+	def removeOuterParentheses(self, S):
+		"""
+		:type S: str
+		:rtype: str
+		"""
+		res, counter = [], 0
+		for c in S:
+			if c == '(' and counter > 0: res.append(c)
+			if c == ')' and counter > 1: res.append(c)
+			counter += 1 if c == '(' else -1
+
+		return ''.join(res)
+
+# 31. Next Permutation
+class Solution(object):
+	def nextPermutation(self, nums): # 58.26%
+		"""
+		:type nums: List[int]
+		:rtype: None Do not return anything, modify nums in-place instead.
+		"""
+		j, l = len(nums) - 1, len(nums)
+		while j:
+			if nums[j] > nums[j - 1]:
+				break
+			j -= 1
+		if j:
+			if nums[-1] > nums[j - 1]:
+				nums[-1], nums[j - 1] = nums[j - 1], nums[-1]
+			else:
+				for i in range(j, l):
+					if nums[i] > nums[j - 1] and nums[i + 1] <= nums[j - 1]:
+						nums[i], nums[j - 1] = nums[j - 1], nums[i]
+			for i in range((l - j) // 2):
+				nums[i + j], nums[l - i - 1] = nums[l - i - 1], nums[i + j]
+		else:
+			nums.sort()
