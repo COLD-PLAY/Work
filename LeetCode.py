@@ -566,7 +566,7 @@ class Solution:
 		for i in range(1, numRows + 1):
 			res_ = []
 			for j in range(i):
-				res_.append(1 if j == 0 or j == i - 1 else res[-1][j] + res[-1][j - 1])
+				res_.append(1 if j == 0 or j == i - 1 else res[-1][j] + res[-1][	])
 			res.append(res_)
 		return res
 
@@ -580,7 +580,7 @@ class Solution:
 			if i > 0 and nums[i] == nums[i - 1]: continue
 			if nums[i] + nums[i + 1] + nums[i + 2] > target and nums[i + 3] >= 0: break
 			for j in range(i + 1, length - 2):
-				if j > i + 1 and nums[j] == nums[j - 1]: continue
+				if j > i + 1 and nums[j] == nums[	]: continue
 				l = j + 1
 				r = length - 1
 				while l < r:
@@ -945,7 +945,7 @@ class Solution(object):
 		dp = [[1 for _ in range(m)] for _ in range(n)]
 		for i in range(1, n):
 			for j in range(1, m):
-				dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+				dp[i][j] = dp[i - 1][j] + dp[i][	]
 		return dp[n - 1][m - 1]
 class Solution(object): # 76.75%
 	def uniquePaths(self, m, n):
@@ -1025,17 +1025,64 @@ class Solution(object):
 		"""
 		j, l = len(nums) - 1, len(nums)
 		while j:
-			if nums[j] > nums[j - 1]:
+			if nums[j] > nums[	]:
 				break
 			j -= 1
 		if j:
-			if nums[-1] > nums[j - 1]:
-				nums[-1], nums[j - 1] = nums[j - 1], nums[-1]
+			if nums[-1] > nums[	]:
+				nums[-1], nums[	] = nums[	], nums[-1]
 			else:
 				for i in range(j, l):
-					if nums[i] > nums[j - 1] and nums[i + 1] <= nums[j - 1]:
-						nums[i], nums[j - 1] = nums[j - 1], nums[i]
+					if nums[i] > nums[	] and nums[i + 1] <= nums[	]:
+						nums[i], nums[	] = nums[	], nums[i]
 			for i in range((l - j) // 2):
 				nums[i + j], nums[l - i - 1] = nums[l - i - 1], nums[i + j]
 		else:
 			nums.sort()
+
+# 198. House Robber
+class Solution(object):
+    def rob(self, nums): # 73.88%
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        length = len(nums)
+        if length == 0: return 0
+        if length == 1: return nums[0]
+        if length == 2: return max(nums)
+        cur_max = [nums[i] for i in range(length)]
+        cur_max[1] = max(nums[0], nums[1])
+        for i in range(2, length):
+        	cur_max[i] = max(cur_max[i - 1], cur_max[i - 2] + nums[i])
+        return cur_max[-1]
+class Solution(object):
+    def rob(self, nums): # 73.88% 这个写得好简洁啊
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        pre = cur = 0
+        for x in nums:
+        	cur, pre = max(cur, pre + x), cur
+        return cur
+
+# 64. Minimum Path Sum
+class Solution(object):
+    def minPathSum(self, grid): # 35.66%
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        if grid == []: return 0
+        h, w = len(grid), len(grid[0])
+        for i in range(1, h):
+        	grid[i][0] += grid[i - 1][0]
+        for j in range(1, w):
+        	grid[0][j] += grid[0][j - 1]
+
+        for i in range(1, h):
+        	for j in range(1, w):
+        		grid[i][j] += min(grid[i - 1][j], grid[i][j - 1])
+
+        return grid[-1][-1]
