@@ -60,8 +60,8 @@ class Solution:
 		if str_num == 0:
 			return res
 		length = [len(str) for str in strs]
-		min_len = min(length)
-		for i in range(min_len):
+			len = min(length)
+		for i in range(	len):
 			for j in range(str_num - 1):
 				if strs[j][i] != strs[j + 1][i]:
 					return res
@@ -1042,47 +1042,132 @@ class Solution(object):
 
 # 198. House Robber
 class Solution(object):
-    def rob(self, nums): # 73.88%
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        length = len(nums)
-        if length == 0: return 0
-        if length == 1: return nums[0]
-        if length == 2: return max(nums)
-        cur_max = [nums[i] for i in range(length)]
-        cur_max[1] = max(nums[0], nums[1])
-        for i in range(2, length):
-        	cur_max[i] = max(cur_max[i - 1], cur_max[i - 2] + nums[i])
-        return cur_max[-1]
+	def rob(self, nums): # 73.88%
+		"""
+		:type nums: List[int]
+		:rtype: int
+		"""
+		length = len(nums)
+		if length == 0: return 0
+		if length == 1: return nums[0]
+		if length == 2: return max(nums)
+		cur_max = [nums[i] for i in range(length)]
+		cur_max[1] = max(nums[0], nums[1])
+		for i in range(2, length):
+			cur_max[i] = max(cur_max[i - 1], cur_max[i - 2] + nums[i])
+		return cur_max[-1]
 class Solution(object):
-    def rob(self, nums): # 73.88% 这个写得好简洁啊
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        pre = cur = 0
-        for x in nums:
-        	cur, pre = max(cur, pre + x), cur
-        return cur
+	def rob(self, nums): # 73.88% 这个写得好简洁啊
+		"""
+		:type nums: List[int]
+		:rtype: int
+		"""
+		pre = cur = 0
+		for x in nums:
+			cur, pre = max(cur, pre + x), cur
+		return cur
 
 # 64. Minimum Path Sum
 class Solution(object):
-    def minPathSum(self, grid): # 35.66%
-        """
-        :type grid: List[List[int]]
-        :rtype: int
-        """
-        if grid == []: return 0
-        h, w = len(grid), len(grid[0])
-        for i in range(1, h):
-        	grid[i][0] += grid[i - 1][0]
-        for j in range(1, w):
-        	grid[0][j] += grid[0][j - 1]
+	def minPathSum(self, grid): # 35.66%
+		"""
+		:type grid: List[List[int]]
+		:rtype: int
+		"""
+		if grid == []: return 0
+		h, w = len(grid), len(grid[0])
+		for i in range(1, h):
+			grid[i][0] += grid[i - 1][0]
+		for j in range(1, w):
+			grid[0][j] += grid[0][j - 1]
 
-        for i in range(1, h):
-        	for j in range(1, w):
-        		grid[i][j] += min(grid[i - 1][j], grid[i][j - 1])
+		for i in range(1, h):
+			for j in range(1, w):
+				grid[i][j] += min(grid[i - 1][j], grid[i][j - 1])
 
-        return grid[-1][-1]
+		return grid[-1][-1]
+
+# 303. Range Sum Query - Immutable
+class NumArray(object): # 55.14%
+
+	def __init__(self, nums):
+		"""
+		:type nums: List[int]
+		"""
+		l = len(nums)
+		self.sum_list = [0] * (l + 1)
+		for i in range(l):
+			self.sum_list[i + 1] = self.sum_list[i] + nums[i]
+
+	def sumRange(self, i, j):
+		"""
+		:type i: int
+		:type j: int
+		:rtype: int
+		"""
+		return self.sum_list[j + 1] - self.sum_list[i]
+
+# Your NumArray object will be instantiated and called as such:
+# obj = NumArray(nums)
+# param_1 = obj.sumRange(i,j)
+
+# 91. Decode Ways
+class Solution(object):
+	def numDecodings(self, s): # 感觉是对的，但是使用递归导致重复计算过多 进而超时
+		"""
+		:type s: str
+		:rtype: int
+		"""
+		if not s or s[0] == '0': return 0
+		illegal_strs = ['00', '30', '40', '50', '60', '70', '80', '90']
+		for illegal_str in illegal_strs:
+			if illegal_str in s: return 0
+
+		def helper(s_):
+			l = len(s_)
+			if len(s_) < 2: return 1
+			return helper(s_[1:]) if int(s_[:2]) > 26 else helper(s_[1:]) + helper(s_[2:])
+
+		if '0' in s:
+			s_ = s.split('0')
+			res = 1
+			for _ in s_:
+				res *= helper(_[:-1])
+			return res
+
+		return helper(s)
+class Solution(object):
+	def numDecodings(self, s): # 稍加改进，使用DP就可以很快了 87.80%
+		"""
+		:type s: str
+		:rtype: int
+		"""
+		if not s or s[0] == '0': return 0
+		illegal_strs = ['00', '30', '40', '50', '60', '70', '80', '90']
+		for illegal_str in illegal_strs:
+			if illegal_str in s: return 0
+
+		def helper(s):
+			l = len(s)
+			if len(s) < 2: return 1
+			res = [1 for i in range(l + 1)]
+			for i in range(2, l + 1):
+				if int(s[i-2:i]) <= 26: res[i] = res[i - 2] + res[i - 1]
+				else: res[i] = res[i - 1]
+			print(res)
+			return res[-1]
+
+		if '0' in s:
+			s_ = s.split('0')
+			res = 1
+			for _ in s_:
+				res *= helper(_[:-1])
+			return res
+
+		return helper(s)
+class Solution(object):
+	def numDecodings(self, s): # 别人的代码，他妈的，为什么
+		v, w, p = 0, int(s>''), ''
+		for d in s:
+			v, w, p = w, (d>'0')*w + (9<int(p+d)<27)*v, d
+		return w

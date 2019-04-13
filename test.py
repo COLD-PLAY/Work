@@ -1,9 +1,9 @@
 # res = []
 # for i in range(1, 8):
-#     res_ = []
-#     for j in range(i):
-#         res_.append(1 if j == 0 or j == i - 1 else res[-1][j] + res[-1][j - 1])
-#     res.append(res_)
+#	 res_ = []
+#	 for j in range(i):
+#		 res_.append(1 if j == 0 or j == i - 1 else res[-1][j] + res[-1][j - 1])
+#	 res.append(res_)
 # print(res)
 # res = [[1, 2, 3], [1, 2, 3], [2, 3, 4]]
 # res = [1, 2, 3, 4, 1]
@@ -136,3 +136,32 @@ def nextPermutation(nums):
 			nums[i + j], nums[l - i - 1] = nums[l - i - 1], nums[i + j]
 	else:
 		nums.sort()
+
+def numDecodings(s):
+	"""
+	:type s: str
+	:rtype: int
+	"""
+	if not s or s[0] == '0': return 0
+	illegal_strs = ['00', '30', '40', '50', '60', '70', '80', '90']
+	for illegal_str in illegal_strs:
+		if illegal_str in s: return 0
+
+	def helper(s):
+		l = len(s)
+		if len(s) < 2: return 1
+		res = [1 for i in range(l + 1)]
+		for i in range(2, l + 1):
+			if int(s[i-2:i]) <= 26: res[i] = res[i - 2] + res[i - 1]
+			else: res[i] = res[i - 1]
+		print(res)
+		return res[-1]
+
+	if '0' in s:
+		s_ = s.split('0')
+		res = 1
+		for _ in s_:
+			res *= helper(_[:-1])
+		return res
+
+	return helper(s)
