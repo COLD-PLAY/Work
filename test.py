@@ -165,3 +165,30 @@ def numDecodings(s):
 		return res
 
 	return helper(s)
+
+def minCostClimbingStairs(cost):
+	"""
+	:type cost: List[int]
+	:rtype: int
+	"""
+	if not cost: return 0
+	if len(cost) == 1: return cost[0]
+	p = c = 0
+	for _ in cost:
+		c, p = min(_ + c, _ + p), c
+	return min(c, p)
+
+def numTrees(n):
+	"""
+	:type n: int
+	:rtype: int
+	"""
+	if n < 2: return n
+	res = [0] * (n + 1)
+	res[0] = res[1] = 1
+	for i in range(2, n + 1):
+		for j in range(i):
+			res[i] += res[j] * res[i - j - 1]
+	return res[-1]
+
+print(numTrees(4))

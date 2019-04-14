@@ -1171,3 +1171,30 @@ class Solution(object):
 		for d in s:
 			v, w, p = w, (d>'0')*w + (9<int(p+d)<27)*v, d
 		return w
+
+# 746. Min Cost Climbing Stairs
+class Solution(object): # 37.81% 不知道为什么这么慢
+	def minCostClimbingStairs(self, cost):
+		"""
+		:type cost: List[int]
+		:rtype: int
+		"""
+		p = c = 0
+		for _ in cost:
+			c, p = min(_ + c, _ + p), c
+		return min(c, p)
+
+# 96. Unique Binary Search Trees
+class Solution(object):
+	def numTrees(self, n): # 66.69%
+		"""
+		:type n: int
+		:rtype: int
+		"""
+		if n < 2: return n
+		r = [0] * (n + 1)
+		r[0] = r[1] = 1
+		for i in range(2, n + 1):
+			for j in range(i):
+				r[i] += r[j] * r[i - j - 1]
+		return r[-1]
