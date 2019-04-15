@@ -190,5 +190,3 @@ def numTrees(n):
 		for j in range(i):
 			res[i] += res[j] * res[i - j - 1]
 	return res[-1]
-
-print(numTrees(4))

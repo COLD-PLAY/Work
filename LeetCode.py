@@ -1067,6 +1067,7 @@ class Solution(object):
 			cur, pre = max(cur, pre + x), cur
 		return cur
 
+#————————————————19/4/12———————————————————
 # 64. Minimum Path Sum
 class Solution(object):
 	def minPathSum(self, grid): # 35.66%
@@ -1111,6 +1112,7 @@ class NumArray(object): # 55.14%
 # obj = NumArray(nums)
 # param_1 = obj.sumRange(i,j)
 
+#————————————————19/4/13———————————————————
 # 91. Decode Ways
 class Solution(object):
 	def numDecodings(self, s): # 感觉是对的，但是使用递归导致重复计算过多 进而超时
@@ -1172,6 +1174,7 @@ class Solution(object):
 			v, w, p = w, (d>'0')*w + (9<int(p+d)<27)*v, d
 		return w
 
+#————————————————19/4/14———————————————————
 # 746. Min Cost Climbing Stairs
 class Solution(object): # 37.81% 不知道为什么这么慢
 	def minCostClimbingStairs(self, cost):
@@ -1198,3 +1201,53 @@ class Solution(object):
 			for j in range(i):
 				r[i] += r[j] * r[i - j - 1]
 		return r[-1]
+
+#————————————————19/4/15———————————————————
+# 101. Symmetric Tree
+# Definition for a binary tree node.
+# class TreeNode(object):
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution(object): # 88.86%
+	def isSymmetric(self, root):
+		"""
+		:type root: TreeNode
+		:rtype: bool
+		"""
+		def helper(l, r):
+			if not l or not r: return l == r
+			if l.val != r.val: return False
+			return helper(l.left, r.right) and helper(l.right, r.left)
+		return root is None or helper(root.left, root.right)
+
+# 112. Path Sum
+# Definition for a binary tree node.
+# class TreeNode(object):
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution(object): # 78.42%
+	def hasPathSum(self, root, sum):
+		"""
+		:type root: TreeNode
+		:type sum: int
+		:rtype: bool
+		"""
+		if not root: return False
+		if not root.left and not root.right: return sum == root.val
+		return self.hasPathSum(root.left, sum - root.val) or self.hasPathSum(root.right, sum - root.val)
+
+# 39. Combination Sum 明天再做
+class Solution(object):
+	def combinationSum(self, candidates, target):
+		"""
+		:type candidates: List[int]
+		:type target: int
+		:rtype: List[List[int]]
+		"""
+		res = []
