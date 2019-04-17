@@ -190,3 +190,24 @@ def numTrees(n):
 		for j in range(i):
 			res[i] += res[j] * res[i - j - 1]
 	return res[-1]
+
+
+def combinationSum(candidates, target):
+	"""
+	:type candidates: List[int]
+	:type target: int
+	:rtype: List[List[int]]
+	"""
+	res = []
+	def helper(c, s, t, r):
+		if t == 0:
+			res.append(r)
+			return
+		if t < c[s]: return
+		for i in range(s, len(c)):
+			helper(c, i, t - c[i], r + [c[i]])
+
+	helper(sorted(candidates), 0, target, [])
+	return res
+
+print(combinationSum([2,3,6,7], 7))

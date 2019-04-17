@@ -1251,3 +1251,110 @@ class Solution(object):
 		:rtype: List[List[int]]
 		"""
 		res = []
+
+#————————————————19/4/16———————————————————
+# 39. Combination Sum 今天继续做
+class Solution(object):
+	def combinationSum(self, candidates, target): # 98.98% 抄别人的🐎的
+		"""
+		:type candidates: List[int]
+		:type target: int
+		:rtype: List[List[int]]
+		"""
+		res = []
+		def helper(c, s, t, r):
+			if t == 0:
+				res.append(r)
+				return
+			if t < c[s]: return
+			for i in range(s, len(c)):
+				helper(c, i, t - c[i], r + [c[i]])
+
+		helper(sorted(candidates), 0, target, [])
+		return res
+
+# 235. Lowest Common Ancestor of a Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode(object):
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution(object):
+	def lowestCommonAncestor(self, root, p, q): # 72.14%
+		"""
+		:type root: TreeNode
+		:type p: TreeNode
+		:type q: TreeNode
+		:rtype: TreeNode
+		"""
+		if root in [p, q]: return root
+		if root.val < max(p.val, q.val) and root.val > min(p.val, q.val):
+			return root
+		return self.lowestCommonAncestor(root.left if root.val > p.val else root.right, p, q)
+
+#————————————————19/4/17———————————————————
+# 236. Lowest Common Ancestor of a Binary Tree
+# Definition for a binary tree node.
+# class TreeNode(object):
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution(object): # 99.54%
+	def lowestCommonAncestor(self, root, p, q):
+		"""
+		:type root: TreeNode
+		:type p: TreeNode
+		:type q: TreeNode
+		:rtype: TreeNode
+		"""
+		def helper(a, b, c = None):
+			if not a: return False
+			if a == b: return True
+			if c and a == c: return True
+			return helper(a.left, b, c) or helper(a.right, b, c)
+		if helper(p, q): return p
+		if helper(q, p): return q
+		stack = []
+		stack.append(root)
+		while stack:
+			cur = stack.pop()
+			if helper(cur.left, p, q) and helper(cur.right, p, q): return cur
+			if cur.left: stack.append(cur.left)
+			if cur.right: stack.append(cur.right)
+
+class Solution(object): # 47.81%
+	ans = None
+	def lowestCommonAncestor(self, root, p, q):
+		"""
+		:type root: TreeNode
+		:type p: TreeNode
+		:type q: TreeNode
+		:rtype: TreeNode
+		"""
+		def helper(cur):
+			if not cur: return False
+			l = helper(cur.left)
+			r = helper(cur.right)
+			m = cur in [p, q]
+			if l + m + r >= 2: self.ans = cur
+			return l or r or m
+		helper(root)
+		return self.ans
+
+# 771. Jewels and Stones
+class Solution(object): # 99.81%
+	def numJewelsInStones(self, J, S):
+		"""
+		:type J: str
+		:type S: str
+		:rtype: int
+		"""
+		res = 0
+		for ch in S:
+			if ch in J:
+				res += 1
+		return res
