@@ -209,5 +209,3 @@ def combinationSum(candidates, target):
 
 	helper(sorted(candidates), 0, target, [])
 	return res
-
-print(combinationSum([2,3,6,7], 7))

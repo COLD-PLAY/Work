@@ -1358,3 +1358,36 @@ class Solution(object): # 99.81%
 			if ch in J:
 				res += 1
 		return res
+
+# 709. To Lower Case
+class Solution(object): # 11.48%
+	def toLowerCase(self, str):
+		"""
+		:type str: str
+		:rtype: str
+		"""
+		ans = ''
+		for ch in str:
+			ans += chr(ord(ch) + 32) if 'Z' >= ch >= 'A' else ch
+		return ans
+
+# 804. Unique Morse Code Words
+class Solution(object): # 67.44%
+	def uniqueMorseRepresentations(self, words):
+		"""
+		:type words: List[str]
+		:rtype: int
+		"""
+		d = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+		def helper(word):
+			res = ''
+			for ch in word:
+				res += d[ord(ch) - ord('a')]
+			return res
+		ans = []
+		for word in words:
+			res = helper(word)
+			if res not in ans:
+				ans.append(res)
+
+		return len(ans)
