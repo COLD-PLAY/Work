@@ -192,7 +192,7 @@ def numTrees(n):
 	return res[-1]
 
 
-def combinationSum(candidates, target):
+def combinationSum2(candidates, target):
 	"""
 	:type candidates: List[int]
 	:type target: int
@@ -203,9 +203,12 @@ def combinationSum(candidates, target):
 		if t == 0:
 			res.append(r)
 			return
-		if t < c[s]: return
 		for i in range(s, len(c)):
-			helper(c, i, t - c[i], r + [c[i]])
+			if i > s and c[i] == c[i - 1]: continue 
+			if c[i] > t: break
+			helper(c, i + 1, t - c[i], r + [c[i]])
 
 	helper(sorted(candidates), 0, target, [])
 	return res
+
+print(combinationSum2([14,6,25,9,30,20,33,34,28,30,16,12,31,9,9,12,34,16,25,32,8,7,30,12,33,20,21,29,24,17,27,34,11,17,30,6,32,21,27,17,16,8,24,12,12,28,11,33,10,32,22,13,34,18,12], 27))

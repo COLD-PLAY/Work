@@ -1263,11 +1263,11 @@ class Solution(object):
 		"""
 		res = []
 		def helper(c, s, t, r):
-			if t == 0:
+			if not t:
 				res.append(r)
 				return
-			if t < c[s]: return
 			for i in range(s, len(c)):
+				if c[i] > t: break
 				helper(c, i, t - c[i], r + [c[i]])
 
 		helper(sorted(candidates), 0, target, [])
@@ -1378,7 +1378,9 @@ class Solution(object): # 67.44%
 		:type words: List[str]
 		:rtype: int
 		"""
-		d = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+		d = [".-","-...","-.-.","-..",".","..-.","--.","....","..",\
+			".---","-.-",".-..","--","-.","---",".--.","--.-",".-.",\
+			"...","-","..-","...-",".--","-..-","-.--","--.."]
 		def helper(word):
 			res = ''
 			for ch in word:
@@ -1391,3 +1393,73 @@ class Solution(object): # 67.44%
 				ans.append(res)
 
 		return len(ans)
+
+# 34. Find First and Last Position of Element in Sorted Array
+class Solution(object): # 38.61 %
+	def searchRange(self, nums, target):
+		"""
+		:type nums: List[int]
+		:type target: int
+		:rtype: List[int]
+		"""
+		if not nums: return [-1, -1]
+		l, r = 0, len(nums) - 1
+		while l <= r:
+			m = (l + r) // 2
+			if nums[m] > target:
+				r = m - 1
+			elif nums[m] < target:
+				l = m + 1
+			else:
+				lr = rl = m
+				while l < lr:
+					mm = (l + lr) // 2
+					if nums[mm] < target:
+						l = mm + 1
+					else:
+						lr = mm
+				while r > rl:
+					mm = (r + rl + 1) // 2
+					if nums[mm] > target:
+						r = mm - 1
+					else:
+						rl = mm
+				return [l, r]
+
+		return [-1, -1]
+class Solution(object): # 32.69%
+	def searchRange(self, nums, target):
+		"""
+		:type nums: List[int]
+		:type target: int
+		:rtype: List[int]
+		"""
+		l = r = -1
+		lf = 0
+		for i in range(len(nums)):
+			if nums[i] > target: break
+			if nums[i] == target:
+				if not lf:
+					l, lf = i, 1
+				r = i
+		return [l, r]
+
+# 40. Combination Sum II
+class Solution(object): # 99.62%
+	def combinationSum2(self, candidates, target):
+		"""
+		:type candidates: List[int]
+		:type target: int
+		:rtype: List[List[int]]
+		"""
+		ans = []
+		def helper(c, s, t, r):
+			if not t:
+				ans.append(r)
+				return
+			for i in range(s, len(c)):
+				if i > s and c[i] == c[i - 1]: continue
+				if c[i] > t: break
+				helper(c, i + 1, t - c[i], r + [c[i]])
+		helper(sorted(candidates), 0, target, [])
+		return ans
