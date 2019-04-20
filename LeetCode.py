@@ -1345,6 +1345,7 @@ class Solution(object): # 47.81%
 		helper(root)
 		return self.ans
 
+#————————————————19/4/18———————————————————
 # 771. Jewels and Stones
 class Solution(object): # 99.81%
 	def numJewelsInStones(self, J, S):
@@ -1394,6 +1395,7 @@ class Solution(object): # 67.44%
 
 		return len(ans)
 
+#————————————————19/4/19———————————————————
 # 34. Find First and Last Position of Element in Sorted Array
 class Solution(object): # 38.61 %
 	def searchRange(self, nums, target):
@@ -1463,3 +1465,40 @@ class Solution(object): # 99.62%
 				helper(c, i + 1, t - c[i], r + [c[i]])
 		helper(sorted(candidates), 0, target, [])
 		return ans
+
+#————————————————19/4/20———————————————————
+# 595. Big Countries (it is a MySQL problem)
+# Write your MySQL query statement below
+SELECT name, population, area # 97.25%
+FROM World
+WHERE area > 3000000 OR population > 25000000
+
+# 929. Unique Email Addresses
+class Solution(object): # 17.99%
+	def numUniqueEmails(self, emails):
+		"""
+		:type emails: List[str]
+		:rtype: int
+		"""
+		res = set()
+		for email in emails:
+			local_real = ''
+			local, domin = email.split('@')
+			for ch in local:
+				if ch == '+': break
+				if ch != '.': local_real += ch
+			email_real = local_real + '@' + domin
+			res.add(email_real)
+		return len(res)
+class Solution(object): # 53.03%
+	def numUniqueEmails(self, emails):
+		"""
+		:type emails: List[str]
+		:rtype: int
+		"""
+		def parse(email):
+			local, domin = email.split('@')
+			local = local.split('+')[0].replace('.', '')
+			return "{}@{}".format(local, domin)
+
+		return len(set(map(parse, emails)))
