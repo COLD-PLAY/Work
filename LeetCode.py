@@ -1502,3 +1502,25 @@ class Solution(object): # 53.03%
 			return "{}@{}".format(local, domin)
 
 		return len(set(map(parse, emails)))
+
+# 905. Sort Array By Parity
+class Solution(object): # 49.45%
+	def sortArrayByParity(self, A):
+		"""
+		:type A: List[int]
+		:rtype: List[int]
+		"""
+		even, odd = [], []
+		for n in A:
+			if n % 2: odd.append(n)
+			else: even.append(n)
+		return even + odd
+
+# 977. Squares of a Sorted Array
+class Solution(object): # 38.18%
+	def sortedSquares(self, A):
+		"""
+		:type A: List[int]
+		:rtype: List[int]
+		"""
+		return sorted([x ** 2 for x in A])
