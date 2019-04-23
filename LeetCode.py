@@ -1503,6 +1503,7 @@ class Solution(object): # 53.03%
 
 		return len(set(map(parse, emails)))
 
+#————————————————19/4/21———————————————————
 # 905. Sort Array By Parity
 class Solution(object): # 49.45%
 	def sortArrayByParity(self, A):
@@ -1525,6 +1526,7 @@ class Solution(object): # 38.18%
 		"""
 		return sorted([x ** 2 for x in A])
 
+#————————————————19/4/22———————————————————
 # 807. Max Increase to Keep City Skyline
 class Solution(object): # 41.68%
 	def maxIncreaseKeepingSkyline(self, grid):
@@ -1584,3 +1586,58 @@ class Solution(object): # 80.54%
 		if root.val > R: return self.rangeSumBST(root.left, L, R)
 		elif root.val < L: return self.rangeSumBST(root.right, L, R)
 		return root.val + self.rangeSumBST(root.left, L, R) + self.rangeSumBST(root.right, L, R)
+
+#————————————————19/4/23———————————————————
+# 535. Encode and Decode TinyURL
+import random, string
+class Codec: # 62.42%
+	def __init__(self):
+		self.urls = dict()
+
+	def encode(self, longUrl):
+		"""Encodes a URL to a shortened URL.
+		
+		:type longUrl: str
+		:rtype: str
+		"""
+		key = ''.join(random.sample(string.ascii_letters + string.digits, 6))
+		if key in self.urls:
+			while key in self.urls:
+				key = ''.join(random.sample(string.ascii_letters + string.digits, 6))
+		self.urls[key] = longUrl
+		return 'http://tinyurl.com/' + key
+
+
+	def decode(self, shortUrl):
+		"""Decodes a shortened URL to its original URL.
+		
+		:type shortUrl: str
+		:rtype: str
+		"""
+		return self.urls[shortUrl.split('/')[-1]]
+
+# Your Codec object will be instantiated and called as such:
+# codec = Codec()
+# codec.decode(codec.encode(url))
+
+# 654. Maximum Binary Tree
+# Definition for a binary tree node.
+# class TreeNode(object):
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution(object): # 42.84 %
+	def constructMaximumBinaryTree(self, nums):
+		"""
+		:type nums: List[int]
+		:rtype: TreeNode
+		"""
+		if not nums: return None
+		m = max(nums)
+		m_p = nums.index(m)
+		root = TreeNode(m)
+		root.left = self.constructMaximumBinaryTree(nums[:m_p])
+		root.right = self.constructMaximumBinaryTree(nums[m_p + 1:])
+		return root
