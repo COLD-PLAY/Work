@@ -210,3 +210,23 @@ def combinationSum2(candidates, target):
 
 	helper(sorted(candidates), 0, target, [])
 	return res
+
+def canJump(nums):
+	"""
+	:type nums: List[int]
+	:rtype: bool
+	"""
+	if len(nums) < 2: return True
+	c, n, l = 0, 1, len(nums) - 1
+	while nums[c]:
+		if nums[c] >= l - c: return True
+		n = c + 1
+		for i in range(2, nums[c] + 1):
+			if nums[c + i] >= nums[n] or nums[n] - nums[c + i] <= c + i - n:
+				n = c + i
+		print(n)
+		c = n
+
+	return False
+
+print(canJump([4,2,0,0,1,1,4,4,4,0,4,0]))

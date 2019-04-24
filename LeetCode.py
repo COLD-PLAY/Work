@@ -1641,3 +1641,66 @@ class Solution(object): # 42.84 %
 		root.left = self.constructMaximumBinaryTree(nums[:m_p])
 		root.right = self.constructMaximumBinaryTree(nums[m_p + 1:])
 		return root
+
+#————————————————19/4/24———————————————————
+# 701. Insert into a Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode(object):
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution(object): # 70.17%
+	def insertIntoBST(self, root, val):
+		"""
+		:type root: TreeNode
+		:type val: int
+		:rtype: TreeNode
+		"""
+		if not root: return TreeNode(val)
+		if root.val > val: root.left = self.insertIntoBST(root.left, val)
+		else: root.right = self.insertIntoBST(root.right, val)
+		return root
+
+
+# 55. Jump Game
+class Solution(object): # 25.89%
+	def canJump(self, nums):
+		"""
+		:type nums: List[int]
+		:rtype: bool
+		"""
+		if len(nums) < 2: return True
+		c, n, l = 0, 1, len(nums) - 1
+		while nums[c]:
+			if nums[c] >= l - c: return True
+			n = c + 1
+			for i in range(2, nums[c] + 1):
+				if nums[c + i] >= nums[n] or nums[n] - nums[c + i] <= c + i - n:
+					n = c + i
+			c = n
+
+		return False
+class Solution(object): # 41.80% 牛皮撒
+	def canJump(self, nums):
+		"""
+		:type nums: List[int]
+		:rtype: bool
+		"""
+		m = 0
+		for i, n in enumerate(nums):
+			if i > m: return False
+			m = max(m, i + n)
+		return True
+class Solution(object): # 46.21%
+	def canJump(self, nums):
+		"""
+		:type nums: List[int]
+		:rtype: bool
+		"""
+		goal = len(nums) - 1
+		for i in range(len(nums) - 1)[::-1]:
+			if nums[i] + i >= goal:
+				goal = i
+		return not goal
