@@ -229,4 +229,20 @@ def canJump(nums):
 
 	return False
 
-print(canJump([4,2,0,0,1,1,4,4,4,0,4,0]))
+def multiply(num1, num2):
+	"""
+	:type num1: str
+	:type num2: str
+	:rtype: str
+	"""
+	l1, l2 = len(num1), len(num2)
+	res = [0 for i in range(l1 + l2)]
+	for i in range(l1)[::-1]:
+		for j in range(l2)[::-1]:
+			m, p1, p2 = (ord(num2[j]) - ord('0')) * (ord(num1[i]) - ord('0')), i + j, i + j + 1
+			s = m + res[p2]
+			res[p1], res[p2] = res[p1] + s // 10, s % 10
+	while not res[0] and res != [0]: res.remove(0)
+	return ''.join(map(str, res))
+
+print(multiply('0', '0'))

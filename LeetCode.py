@@ -1704,3 +1704,58 @@ class Solution(object): # 46.21%
 			if nums[i] + i >= goal:
 				goal = i
 		return not goal
+
+#————————————————19/4/25———————————————————
+# 48. Rotate Image
+class Solution(object): # 73.38%
+	def rotate(self, matrix):
+		"""
+		:type matrix: List[List[int]]
+		:rtype: None Do not return anything, modify matrix in-place instead.
+		"""
+		# matrix[:] = zip(*matrix[::-1])
+		matrix[:] = [[row[i] for row in matrix[::-1]] for i in range(len(matrix))]
+class Solution(object): # 73.38%
+	def rotate(self, matrix):
+		"""
+		:type matrix: List[List[int]]
+		:rtype: None Do not return anything, modify matrix in-place instead.
+		"""
+		n = len(matrix)
+		for i in range(n // 2):
+			matrix[i], matrix[~i] = matrix[~i], matrix[i]
+		for i in range(n):
+			for j in range(i + 1, n):
+				matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+
+# 43. Multiply Strings
+class Solution(object): # 30.07% 作弊了
+	def multiply(self, num1, num2):
+		"""
+		:type num1: str
+		:type num2: str
+		:rtype: str
+		"""
+		ans = 0
+		for i1, n1 in enumerate(num1[::-1]):
+			res = 0
+			for i2, n2 in enumerate(num2[::-1]):
+				res += (ord(n2) - ord('0')) * (ord(n1) - ord('0')) * (10 ** i2)
+			ans += res * (10 ** i1)
+		return ans
+class Solution(object): # 52.87%
+	def multiply(self, num1, num2):
+		"""
+		:type num1: str
+		:type num2: str
+		:rtype: str
+		"""
+		l1, l2 = len(num1), len(num2)
+		res = [0 for i in range(l1 + l2)]
+		for i in range(l1)[::-1]:
+			for j in range(l2)[::-1]:
+				m, p1, p2 = (ord(num2[j]) - ord('0')) * (ord(num1[i]) - ord('0')), i + j, i + j + 1
+				s = m + res[p2]
+				res[p1], res[p2] = res[p1] + s // 10, s % 10
+		while not res[0] and res != [0]: res.remove(0)
+		return ''.join(map(str, res))
