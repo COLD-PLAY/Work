@@ -1759,3 +1759,59 @@ class Solution(object): # 52.87%
 				res[p1], res[p2] = res[p1] + s // 10, s % 10
 		while not res[0] and res != [0]: res.remove(0)
 		return ''.join(map(str, res))
+
+#————————————————19/4/26———————————————————
+# 47. Permutations II
+class Solution(object): # 8.78%
+	def permuteUnique(self, nums):
+		"""
+		:type nums: List[int]
+		:rtype: List[List[int]]
+		"""
+		ans = []
+		def helper(nums, _):
+			if not nums:
+				if _ not in ans:
+					ans.append(_)
+				return
+			for i in range(l):
+				helper(nums[:i] + nums[i+1:], i, l, _ + [nums[i]])
+
+		helper(nums, 0, [])
+		return ans
+class Solution(object): # 15.91%
+	def permuteUnique(self, nums):
+		"""
+		:type nums: List[int]
+		:rtype: List[List[int]]
+		"""
+		def helper(n):
+			if not n: return [[]]
+			return [_ + [n[i]] for i in range(len(n)) for _ in helper(n[:i] + n[i+1:])]
+		return [list(_) for _ in set([tuple(_) for _ in helper(nums)])]
+class Solution(object): # 100.00% niubility
+	def permuteUnique(self, nums):
+		"""
+		:type nums: List[int]
+		:rtype: List[List[int]]
+		"""
+		perms = [[]]
+		for i, n in enumerate(nums):
+			perms = [p[:i] + [n] + p[i:] for p in perms for i in range((p + [n]).index(n) + 1)]
+		return [list(p) for p in set([tuple(p) for p in perms])]
+
+# 49. Group Anagrams
+class Solution(object): # 91.24%
+	def groupAnagrams(self, strs):
+		"""
+		:type strs: List[str]
+		:rtype: List[List[str]]
+		"""
+		s, r = [''.join(sorted([ch for ch in str])) for str in strs], {}
+		for i, s_ in enumerate(s):
+			if s_ not in r:
+				r[s_] = [i]
+			else:
+				r[s_].append(i)
+
+		return [[strs[i] for i in v] for v in r.values()]

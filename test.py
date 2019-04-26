@@ -1,14 +1,3 @@
-# res = []
-# for i in range(1, 8):
-#	 res_ = []
-#	 for j in range(i):
-#		 res_.append(1 if j == 0 or j == i - 1 else res[-1][j] + res[-1][j - 1])
-#	 res.append(res_)
-# print(res)
-# res = [[1, 2, 3], [1, 2, 3], [2, 3, 4]]
-# res = [1, 2, 3, 4, 1]
-# res = list(set(res))
-# print(res)
 def fourSum(nums, target: int):
 	nums.sort()
 	length = len(nums)
@@ -245,4 +234,58 @@ def multiply(num1, num2):
 	while not res[0] and res != [0]: res.remove(0)
 	return ''.join(map(str, res))
 
-print(multiply('0', '0'))
+def permuteUnique1(nums):
+	"""
+	:type nums: List[int]
+	:rtype: List[List[int]]
+	"""
+	ans = []
+	def helper(nums, res):
+		if len(nums) == 0:
+			if res not in ans:
+				ans.append(res)
+			return
+		for i in range(len(nums)):
+			helper(nums[:i] + nums[i + 1:], res + [nums[i]])
+
+	helper(nums, [])
+	return ans
+
+def permuteUnique2(nums):
+	"""
+	:type nums: List[int]
+	:rtype: List[List[int]]
+	"""
+	if not nums: return []
+	def helper(nums):
+		if not nums: return [[]]
+		return [_ + [nums[i]] for i in range(len(nums)) for _ in helper(nums[:i] + nums[i+1:])]
+	return [list(_) for _ in set([tuple(_) for _ in helper(nums)])]
+
+def permuteUnique3(nums):
+	perms = [[]]
+	for i, n in enumerate(nums):
+		perms = [p[:i] + [n] + p[i:] for p in perms for i in range(len(p) + 1)]
+	return [list(p) for p in set([tuple(p) for p in perms])]
+
+def groupAnagrams(strs):
+	"""
+	:type strs: List[str]
+	:rtype: List[List[str]]
+	"""
+	s, r = [''.join(sorted([ch for ch in str])) for str in strs], {}
+	for i, s_ in enumerate(s):
+		if s_ not in r:
+			r[s_] = [i]
+		else:
+			r[s_].append(i)
+	return [[strs[i] for i in v] for v in r.values()]
+
+if __name__ == '__main__':
+	import time
+	s = time.time()
+
+	print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+	
+	e = time.time()
+	print('%f s' % (e - s))
