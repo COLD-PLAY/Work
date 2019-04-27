@@ -1,4 +1,4 @@
-def fourSum(nums, target: int):
+def fourSum(nums, target):
 	nums.sort()
 	length = len(nums)
 	res = []
@@ -284,8 +284,5 @@ def groupAnagrams(strs):
 if __name__ == '__main__':
 	import time
 	s = time.time()
-
-	print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
-	
 	e = time.time()
 	print('%f s' % (e - s))
