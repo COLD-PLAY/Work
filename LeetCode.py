@@ -1815,3 +1815,19 @@ class Solution(object): # 91.24%
 				r[s_].append(i)
 
 		return [[strs[i] for i in v] for v in r.values()]
+
+#————————————————19/4/27———————————————————
+# 50. Pow(x, n)
+class Solution: # 99.74%
+	def myPow(self, x: float, n: int) -> float:
+		p, (f, n) = 1, (1, n) if n > 0 else (0, -n)
+		while n:
+			if n & 1: p *= x
+			x *= x
+			n >>= 1
+		return p if f else 1 / p
+
+# 54. Spiral Matrix
+class Solution:
+	def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+		pass
