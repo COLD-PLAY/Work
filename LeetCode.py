@@ -1817,6 +1817,29 @@ class Solution(object): # 91.24%
 		return [[strs[i] for i in v] for v in r.values()]
 
 #————————————————19/4/27———————————————————
+# 50. Pow(x, n)
+class Solution: # 99.74%
+	def myPow(self, x: float, n: int) -> float:
+		p, (f, n) = 1, (1, n) if n > 0 else (0, -n)
+		while n:
+			if n & 1: p *= x
+			x *= x
+			n >>= 1
+		return p if f else 1 / p
+
+# 54. Spiral Matrix
+class Solution: # 77.19% 
+	def spiralOrder(self, m: List[List[int]]) -> List[int]:
+		r = []
+		while m:
+			r += m.pop(0)
+			m = [*zip(*m)][::-1]
+		return r
+class Solution: # 77.19% 大神写的一行AC代码
+	def spiralOrder(self, m: List[List[int]]) -> List[int]:
+		return m and [*m.pop(0)] + self.spiralOrder([*zip(*m)][::-1])
+
+#————————————————19/4/28———————————————————
 # 1033. Moving Stones Until Consecutive
 class Solution(object):
 	def numMovesStones(self, a, b, c):

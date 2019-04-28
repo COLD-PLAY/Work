@@ -1,4 +1,4 @@
-def fourSum(nums, target: int):
+def fourSum(nums, target):
 	nums.sort()
 	length = len(nums)
 	res = []
