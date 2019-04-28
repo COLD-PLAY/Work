@@ -284,8 +284,6 @@ def groupAnagrams(strs):
 if __name__ == '__main__':
 	import time
 	s = time.time()
-
-	print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
-	
 	e = time.time()
 	print('%f s' % (e - s))
+

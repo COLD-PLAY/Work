@@ -1815,3 +1815,96 @@ class Solution(object): # 91.24%
 				r[s_].append(i)
 
 		return [[strs[i] for i in v] for v in r.values()]
+
+#————————————————19/4/27———————————————————
+# 1033. Moving Stones Until Consecutive
+class Solution(object):
+	def numMovesStones(self, a, b, c):
+		"""
+		:type a: int
+		:type b: int
+		:type c: int
+		:rtype: List[int]
+		"""
+		a, b, c = sorted([a, b, c])
+		return [2 if c - b > 2 and b - a > 2 else int(c - b > 1 or b - a > 1), c - a - 2]
+
+# 1034. Coloring A Border
+class Solution(object):
+	def colorBorder(self, grid, r0, c0, color):
+		"""
+		:type grid: List[List[int]]
+		:type r0: int
+		:type c0: int
+		:type color: int
+		:rtype: List[List[int]]
+		"""
+		h, w, c = len(grid), len(grid[0]), grid[r0][c0]
+		m = [[0 for i in range(w)] for j in range(h)]
+		def helper(g, x, y, c, m, h, w):
+			if x < 0 or x >= h or y < 0 or y >= w or m[x][y]: return
+			if g[x][y] != c:
+				m[x][y] = -1
+				return
+			m[x][y] = 1
+			helper(g, x + 1, y, c, m, h, w)
+			helper(g, x - 1, y, c, m, h, w)
+			helper(g, x, y + 1, c, m, h, w)
+			helper(g, x, y - 1, c, m, h, w)
+		helper(grid, r0, c0, c, m, h, w)
+		for i in range(h):
+			for j in range(w):
+				if m[i][j] == 1 and not (h - 1 > i > 0 and w - 1 > j > 0 and m[i - 1][j] == 1 and m[i + 1][j] == 1 and m[i][j - 1] == 1 and m[i][j + 1] == 1):
+					grid[i][j] = color
+		return grid
+
+# 500. Keyboard Row
+class Solution(object):
+	def findWords(self, words):
+		"""
+		:type words: List[str]
+		:rtype: List[str]
+		"""
+		def helper(ch):
+			if ch in 'qwertyuiopQWERTYUIOP': return 1
+			elif ch in 'asdfghjklASDFGHJKL': return 2
+			return 3
+		res = []
+		for word in words:
+			l, f = helper(word[0]), 1
+			for ch in word:
+				if helper(ch) != l:
+					f = 0
+					break
+			if f: res.append(word)
+		return res
+
+# 508. Most Frequent Subtree Sum
+# Definition for a binary tree node.
+# class TreeNode(object):
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution(object):
+	def findFrequentTreeSum(self, root):
+		"""
+		:type root: TreeNode
+		:rtype: List[int]
+		"""
+		if not root: return []
+		res, ans = [], {}
+		def helper(root):
+			if not root: return 0
+			s = root.val + helper(root.left) + helper(root.right)
+			res.append(s)
+			return s
+		helper(root)
+		for _ in res:
+			if _ not in ans: ans[_] = 1
+			else: ans[_] += 1
+		m, r = max(ans.values()), []
+		for _ in ans.keys():
+			if ans[_] == m: r.append(_)
+		return r
