@@ -1931,3 +1931,41 @@ class Solution(object):
 		for _ in ans.keys():
 			if ans[_] == m: r.append(_)
 		return r
+
+#————————————————19/4/29———————————————————
+# 59. Spiral Matrix II
+class Solution(object): # 100.00%
+	def generateMatrix(self, n):
+		"""
+		:type n: int
+		:rtype: List[List[int]]
+		"""
+		steps, way, res = [], [[0, 1], [1, 0], [0, -1], [-1, 0]], [[0 for i in range(n)] for j in range(n)]
+		for i in range(1, n): steps += [i, i]
+		steps.append(n)
+		x, y, w, c = 0, -1, 0, 0
+		while steps:
+			step = steps.pop()
+			for i in range(step):
+				c, x, y = c + 1, x + way[w][0], y + way[w][1]
+				res[x][y] = c
+			w = (w + 1) % 4
+		return res
+class Solution(object): # 100.00% niubility
+	def generateMatrix(self, n):
+		A, lo = [], n*n+1
+		while lo > 1:
+			lo, hi = lo - len(A), lo
+			A = [range(lo, hi)] + zip(*A[::-1])
+		return A
+# 961. N-Repeated Element in Size 2N Array
+class Solution(object): # 33.33%
+	def repeatedNTimes(self, A):
+		"""
+		:type A: List[int]
+		:rtype: int
+		"""
+		r = set()
+		for n in A:
+			if n in r: return n
+			r.add(n)

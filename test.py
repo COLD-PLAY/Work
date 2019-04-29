@@ -281,9 +281,26 @@ def groupAnagrams(strs):
 			r[s_].append(i)
 	return [[strs[i] for i in v] for v in r.values()]
 
+def generateMatrix(n):
+	"""
+	:type n: int
+	:rtype: List[List[int]]
+	"""
+	steps, way, res = [], [[0, 1], [1, 0], [0, -1], [-1, 0]], [[0 for i in range(n)] for j in range(n)]
+	for i in range(1, n): steps += [i, i]
+	steps.append(n)
+	x, y, w, c = 0, -1, 0, 0
+	while steps:
+		step = steps.pop()
+		for i in range(step):
+			c, x, y = c + 1, x + way[w][0], y + way[w][1]
+			res[x][y] = c
+		w = (w + 1) % 4
+	print(res)
+
 if __name__ == '__main__':
 	import time
 	s = time.time()
+	generateMatrix(7)
 	e = time.time()
 	print('%f s' % (e - s))
-
