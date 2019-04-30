@@ -298,9 +298,17 @@ def generateMatrix(n):
 		w = (w + 1) % 4
 	print(res)
 
+def getPermutation(n, k):
+	def helper(r, k):
+		if k == 1: return r
+		f = reduce(lambda x,y: x*y, [i for i in range(1, len(r))])
+		a, b = (k-1)//f, k % f if k % f else f
+		return r[a] + helper(r[:a] + r[a+1:], b)
+	return helper(''.join([str(i) for i in range(1, n + 1)]), k)
+
 if __name__ == '__main__':
 	import time
 	s = time.time()
-	generateMatrix(7)
+	print(getPermutation(4, 24))
 	e = time.time()
 	print('%f s' % (e - s))

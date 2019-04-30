@@ -1969,3 +1969,35 @@ class Solution(object): # 33.33%
 		for n in A:
 			if n in r: return n
 			r.add(n)
+
+#————————————————19/4/30———————————————————
+# 56. Merge Intervals
+class Solution: # 69.89%
+	def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+		intervals.sort()
+		i = 0
+		while i < len(intervals) - 1:
+			if intervals[i][1] >= intervals[i + 1][0]:
+				intervals[i] = [intervals[i][0], max(intervals[i + 1][1], intervals[i][1])]
+				intervals.pop(i + 1)
+			else: i += 1
+		return intervals
+class Solution: # 100.00%
+	def merge(self, intervals):
+		out = []
+		for i in sorted(intervals, key=lambda i: i[0]):
+			if out and i[0] <= out[-1][1]:
+				out[-1][1] = max(out[-1][1], i[1])
+			else:
+				out += i,
+		return out
+
+# 60. Permutation Sequence
+class Solution(object): # 95.06%
+	def getPermutation(self, n, k):
+		def helper(r, k):
+			if k == 1: return r
+			f = reduce(lambda x,y: x*y, [i for i in range(1, len(r))])
+			a, b = (k-1)//f, k % f if k % f else f
+			return r[a] + helper(r[:a] + r[a+1:], b)
+		return helper(''.join([str(i) for i in range(1, n + 1)]), k)
