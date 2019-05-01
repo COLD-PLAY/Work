@@ -309,6 +309,5 @@ def getPermutation(n, k):
 if __name__ == '__main__':
 	import time
 	s = time.time()
-	print(getPermutation(4, 24))
 	e = time.time()
 	print('%f s' % (e - s))

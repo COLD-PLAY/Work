@@ -2001,3 +2001,29 @@ class Solution(object): # 95.06%
 			a, b = (k-1)//f, k % f if k % f else f
 			return r[a] + helper(r[:a] + r[a+1:], b)
 		return helper(''.join([str(i) for i in range(1, n + 1)]), k)
+
+#————————————————19/5/1———————————————————
+# 832. Flipping an Image
+class Solution: # 77.63%
+	def flipAndInvertImage(self, A: List[List[int]]) -> List[List[int]]:
+		return [list(map(lambda x: 0 if x else 1, row[::-1])) for row in A]
+
+# 1008. Construct Binary Search Tree from Preorder Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution: # 100.00%
+	def bstFromPreorder(self, preorder: List[int]) -> TreeNode:
+		def helper(r, n):
+			if not r: return TreeNode(n)
+			if r.val > n: r.left = helper(r.left, n)
+			else: r.right = helper(r.right, n)
+			return r
+		r = None
+		for n in preorder:
+			r = helper(r, n)
+		return r
