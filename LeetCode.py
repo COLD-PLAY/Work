@@ -2027,3 +2027,55 @@ class Solution: # 100.00%
 		for n in preorder:
 			r = helper(r, n)
 		return r
+
+#————————————————19/5/2———————————————————
+# 61. Rotate List
+# Definition for singly-linked list.
+# class ListNode:
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.next = None
+
+class Solution: # 86.05%
+	def rotateRight(self, head: ListNode, k: int) -> ListNode:
+		if not head: return None
+		l, p = 0, head
+		while p:
+			l, p = l + 1, p.next
+		k, p = l - k % l if k and k % l else 0, head
+		if not k or l < 2: return head
+		while k:
+			p, k = p.next, k - 1
+		q = p
+		while q.next:
+			q = q.next
+		q.next = head
+		while head.next != p:
+			head = head.next
+		head.next = None
+		return p
+
+# 63. Unique Paths II
+class Solution: # Time Limit Exceeded
+	def uniquePathsWithObstacles(self, A: List[List[int]]) -> int:
+		if A[0][0] or not A: return 0
+		self.r = 0
+		def dfs(x, y, h, w, A):
+			if x == h and y == w:
+				self.r += 1
+				return
+			if x + 1 <= h and not A[x + 1][y]: dfs(x + 1, y, h, w, A)
+			if y + 1 <= w and not A[x][y + 1]: dfs(x, y + 1, h, w, A)
+		dfs(0, 0, len(A) - 1, len(A[0]) - 1, A)
+		return self.r
+class Solution: # 76.53%
+	def uniquePathsWithObstacles(self, A: List[List[int]]) -> int:
+		if A[0][0] or A[-1][-1] or not A: return 0
+		h, w = len(A), len(A[0])
+		m = [[1 for j in range(w)] for i in range(h)]
+		for i in range(h):
+			for j in range(w):
+				if i == 0 and j == 0: m[i][j] == 1
+				else: m[i][j] = 0 if A[i][j] else (m[i - 1][j] if i > 0 else 0) + (m[i][j - 1] if j > 0 else 0)
+
+		return m[-1][-1]
