@@ -2079,3 +2079,38 @@ class Solution: # 76.53%
 				else: m[i][j] = 0 if A[i][j] else (m[i - 1][j] if i > 0 else 0) + (m[i][j - 1] if j > 0 else 0)
 
 		return m[-1][-1]
+
+#————————————————19/5/3———————————————————
+# 71. Simplify Path
+class Solution: # 97.84%
+	def simplifyPath(self, path: str) -> str:
+		while '//' in path: path = path.replace('//', '/')
+		file, res = path.split('/'), []
+		while '' in file: file.remove('')
+		while '.' in file: file.remove('.')
+		for f in file:
+			if f != '..': res.append(f)
+			elif res: res.pop()
+		return '/' + '/'.join(res)
+
+# 73. Set Matrix Zeroes
+class Solution: # 82.83%
+	def setZeroes(self, A: List[List[int]]) -> None:
+		"""
+		Do not return anything, modify matrix in-place instead.
+		"""
+		h, w = len(A), len(A[0])
+		row, col = [], []
+		for i in range(h):
+			for j in range(w):
+				if not A[i][j]:
+					if i not in row: row.append(i)
+					if j not in col: col.append(j)
+
+		for r in row:
+			for j in range(w):
+				A[r][j] = 0
+
+		for c in col:
+			for i in range(h):
+				A[i][c] = 0
