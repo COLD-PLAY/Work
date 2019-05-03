@@ -2114,3 +2114,40 @@ class Solution: # 82.83%
 		for c in col:
 			for i in range(h):
 				A[i][c] = 0
+
+# 77. Combinations
+class Solution:
+	def combine(self, n: int, k: int) -> List[List[int]]:
+		self.res = []
+		def helper(r, nums, k):
+			if k == 0:
+				self.res.append(r)
+				return
+			for i in range(len(nums)):
+				helper(r + [nums[i]], nums[i+1:], k - 1)
+
+		helper([], [i + 1 for i in range(n)], k)
+		return self.res
+class Solution: # 50.15%
+	def combine(self, n: int, k: int) -> List[List[int]]:
+		self.res = []
+		def helper(r, s, n, k):
+			if k == 0:
+				self.res.append(r)
+				return
+			for i in range(s, n + 1):
+				helper(r + [i], i + 1, n, k - 1)
+
+		helper([], 1, n, k)
+		return self.res
+class Solution: # 69.27%
+	def combine(self, n: int, k: int) -> List[List[int]]:
+		if k == 0:
+			return [[]]
+		return [pre + [i] for i in range(k, n+1) for pre in self.combine(i-1, k-1)]
+class Solution: # 11.05%
+	def combine(self, n, k):
+		combs = [[]]
+		for _ in range(k):
+			combs = [[i] + c for c in combs for i in range(1, c[0] if c else n+1)]
+		return combs

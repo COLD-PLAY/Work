@@ -318,8 +318,23 @@ class Solution:
 
 		return m[-1][-1]
 
+class Solution:
+	def combine(self, n: int, k: int):
+		self.res = []
+		def helper(r, s, n, k):
+			if k == 0:
+				self.res.append(r)
+				return
+			for i in range(s, n + 1):
+				helper(r + [i], i + 1, n, k - 1)
+
+		helper([], 1, n, k)
+		return self.res
+
 if __name__ == '__main__':
 	import time
 	s = time.time()
+	S = Solution()
+	print(S.combine(4, 2))
 	e = time.time()
 	print('%f s' % (e - s))
