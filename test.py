@@ -331,10 +331,39 @@ class Solution:
 		helper([], 1, n, k)
 		return self.res
 
+class Solution:
+	def searchMatrix(self, A, t):
+		if not A: return False
+		if t < A[0][0] or t > A[-1][-1]: return False
+		h, w, x, y = len(A), len(A[0]), -1, -1
+		u, d, l, r = 0, h - 1, 0, w - 1
+		while u <= d:
+			m = (u + d) // 2
+			if A[m][0] <= t <= A[m][-1]:
+				x = m
+				break
+			if A[m][0] > t: d = m - 1
+			elif A[m][-1] < t: u = m + 1
+		if x == -1:
+			print('x error')
+			return False
+		while l < r:
+			m = (l + r) // 2
+			if A[x][m] == t:
+				y = m
+				break
+			elif A[x][m] < t: l = m + 1
+			else: r = m - 1
+		if y == -1:
+			print('y error')
+			return False
+		return True
+
 if __name__ == '__main__':
 	import time
 	s = time.time()
 	S = Solution()
-	print(S.combine(4, 2))
+	r = S.searchMatrix([[1,3,5,7],[10,11,16,20],[23,30,34,50]], 9)
+	print(r)
 	e = time.time()
 	print('%f s' % (e - s))

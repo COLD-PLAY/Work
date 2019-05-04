@@ -2151,3 +2151,50 @@ class Solution: # 11.05%
 		for _ in range(k):
 			combs = [[i] + c for c in combs for i in range(1, c[0] if c else n+1)]
 		return combs
+
+#————————————————19/5/4———————————————————
+# 45. Jump Game II
+class Solution: # 66.75%
+	def jump(self, nums: List[int]) -> int:
+		c, r, l = 0, 0, len(nums) - 1
+		while c != l:
+			if c + nums[c] >= l: c = l
+			else:
+				m = c + nums[c]
+				for i in range(c + 1, c + nums[c] + 1):
+					if m <= i + nums[i]:
+						m, c = i + nums[i], i
+			r += 1
+		return r
+class Solution: # 51.41%
+	def jump(self, nums: List[int]) -> int:
+		c, n, r, l = 0, 0, 0, len(nums)
+		while n < l - 1:
+			c, n = n, max(i + nums[i] for i in range(c, n + 1))
+			r += 1
+		return r
+
+# 74. Search a 2D Matrix
+class Solution: # 82.23%
+	def searchMatrix(self, A, t):
+		if not A or not A[0]: return False
+		if t < A[0][0] or t > A[-1][-1]: return False
+		h, w, x, y = len(A), len(A[0]), -1, -1
+		u, d, l, r = 0, h - 1, 0, w - 1
+		while u <= d:
+			m = (u + d) // 2
+			if A[m][0] <= t <= A[m][-1]:
+				x = m
+				break
+			if A[m][0] > t: d = m - 1
+			elif A[m][-1] < t: u = m + 1
+		if x == -1: return False
+		while l <= r:
+			m = (l + r) // 2
+			if A[x][m] == t:
+				y = m
+				break
+			elif A[x][m] < t: l = m + 1
+			else: r = m - 1
+		if y == -1: return False
+		return True
