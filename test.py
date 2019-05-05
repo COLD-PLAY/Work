@@ -307,7 +307,7 @@ def getPermutation(n, k):
 	return helper(''.join([str(i) for i in range(1, n + 1)]), k)
 
 class Solution:
-	def uniquePathsWithObstacles(self, A) -> int:
+	def uniquePathsWithObstacles(self, A):
 		if A[0][0] or A[-1][-1] or not A: return 0
 		h, w = len(A), len(A[0])
 		m = [[1 for j in range(w)] for i in range(h)]
@@ -319,7 +319,7 @@ class Solution:
 		return m[-1][-1]
 
 class Solution:
-	def combine(self, n: int, k: int):
+	def combine(self, n, k):
 		self.res = []
 		def helper(r, s, n, k):
 			if k == 0:
@@ -359,11 +359,31 @@ class Solution:
 			return False
 		return True
 
+class Solution:
+	def exist(self, b, w):
+		x, y = len(b), len(b[0])
+		for i in range(x):
+			for j in range(y):
+				if self.dfs(b, i, j, w):
+					return True
+		return False
+		
+	def dfs(self, b, x, y, w):
+		if not w: return True
+		if x < 0 or x >= len(b) or y < 0 or y >= len(b[0]) or b[x][y] != w[0]: return False
+		t, b[x][y] = b[x][y], '#'
+		res = self.dfs(b, x + 1, y, w[1:]) or self.dfs(b, x - 1, y, w[1:]) or self.dfs(b, x, y + 1, w[1:]) or self.dfs(b, x, y - 1, w[1:])
+		b[x][y] = t
+		return res
+
 if __name__ == '__main__':
 	import time
 	s = time.time()
-	S = Solution()
-	r = S.searchMatrix([[1,3,5,7],[10,11,16,20],[23,30,34,50]], 9)
-	print(r)
+
+	a = [[1, 2], [2, 3], [1, 2]]
+	print(a[:])
+	A, B, C = a[:]
+	print(B)
+
 	e = time.time()
 	print('%f s' % (e - s))

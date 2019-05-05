@@ -2198,3 +2198,55 @@ class Solution: # 82.23%
 			else: r = m - 1
 		if y == -1: return False
 		return True
+
+#————————————————19/5/5———————————————————
+# 78. Subsets
+class Solution: # 87.20%
+	def subsets(self, nums):
+		r = [[]]
+		for n in nums:
+			r += [_ + [n] for _ in r]
+		return r
+
+# 79. Word Search
+class Solution: # 56.28%
+	def exist(self, b, w):
+		x, y = len(b), len(b[0])
+		for i in range(x):
+			for j in range(y):
+				if self.dfs(b, i, j, w):
+					return True
+		return False
+		
+	def dfs(self, b, x, y, w):
+		if not w: return True
+		if x < 0 or x >= len(b) or y < 0 or y >= len(b[0]) or b[x][y] != w[0]: return False
+		t, b[x][y] = b[x][y], '#'
+		res = self.dfs(b, x + 1, y, w[1:]) or self.dfs(b, x - 1, y, w[1:]) or self.dfs(b, x, y + 1, w[1:]) or self.dfs(b, x, y - 1, w[1:])
+		b[x][y] = t
+		return res
+
+# Weekly Contest 135
+# 1037. Valid Boomerang
+class Solution:
+	def isBoomerang(self, points: List[List[int]]) -> bool:
+		A, B, C = points
+		if A == B or B == C or A == C or \
+			(C[1] - B[1]) * (B[0] - A[0]) == (B[1] - A[1]) * (C[0] - B[0]): return False
+		return True
+
+# 1038. Binary Search Tree to Greater Sum Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution:
+	val = 0
+	def bstToGst(self, r: TreeNode) -> TreeNode:
+		if r.right: self.bstToGst(r.right)
+		r.val = self.val = self.val + r.val
+		if r.left: self.bstToGst(r.left)
+		return r
