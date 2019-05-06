@@ -2250,3 +2250,70 @@ class Solution:
 		r.val = self.val = self.val + r.val
 		if r.left: self.bstToGst(r.left)
 		return r
+
+#————————————————19/5/6———————————————————
+# 80. Remove Duplicates from Sorted Array II
+class Solution: # 95.73%
+	def removeDuplicates(self, nums):
+		r, t, p, c, l = 0, 0, 0, 0, len(nums)
+		while t < l:
+			c = c + 1 if nums[t] == nums[p] else 1
+			if c > 2:
+				t += 1
+				continue
+			if t > r:
+				nums[r] = nums[t]
+			p, r, t = r, r+1, t+1
+
+		return r
+class Solution: # 95.73% niubility
+	def removeDuplicates(self, nums):
+		r = 0
+		for n in nums:
+			if r < 2 or n > nums[r-2]:
+				nums[r] = n
+				r += 1
+		return r
+
+# 86. Partition List
+# Definition for singly-linked list.
+# class ListNode:
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.next = None
+
+class Solution: # 97.54%
+	def partition(self, h, x):
+		h1 = l1 = ListNode(0)
+		h2 = l2 = ListNode(0)
+		while h:
+			if h.val < x:
+				l1.next = h
+				l1 = h
+			else:
+				l2.next = h
+				l2 = h
+			h = h.next
+		l2.next = None
+		l1.next = h2.next
+		return h1.next
+
+# 89. Gray Code
+class Solution: # 5.18%
+	def grayCode(self, n):
+		r = [0]
+		for i in range(2 ** n - 1):
+			for i in range(n):
+				if r[-1]^(2 ** i) not in r:
+					r.append(r[-1]^(2 ** i))
+					break
+		return r
+class Solution: # 82.25%
+	def grayCode(self, n):
+		r = []
+		for i in range(1<<n):
+			r.append(i^(i>>1))
+		return r
+class Solution: # 34.71%
+	def grayCode(self, n):
+		return self.grayCode(n-1) + [2**(n-1) + _ for _ in self.grayCode(n-1)[::-1]] if n else [0]

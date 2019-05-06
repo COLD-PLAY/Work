@@ -376,14 +376,36 @@ class Solution:
 		b[x][y] = t
 		return res
 
+class Solution:
+	def removeDuplicates(self, nums):
+		r, t, p, c, l = 0, 0, 0, 0, len(nums)
+		while t < l:
+			c = c + 1 if nums[t] == nums[p] else 1
+			if c > 2:
+				t += 1
+				continue
+			if t > r:
+				nums[r] = nums[t]
+			p, r, t = r, r+1, t+1
+			
+		return r
+
+class Solution:
+	def grayCode(self, n):
+		r = [0]
+		for i in range(2 ** n - 1):
+			for i in range(n):
+				if r[-1]^(2 ** i) not in r:
+					r.append(r[-1]^(2 ** i))
+					break
+		return r
+
 if __name__ == '__main__':
 	import time
 	s = time.time()
 
-	a = [[1, 2], [2, 3], [1, 2]]
-	print(a[:])
-	A, B, C = a[:]
-	print(B)
+	S = Solution()
+	print(S.grayCode(3))
 
 	e = time.time()
 	print('%f s' % (e - s))
