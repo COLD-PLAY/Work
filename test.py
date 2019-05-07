@@ -400,12 +400,45 @@ class Solution:
 					break
 		return r
 
+class Solution:
+	def restoreIpAddresses(self, s):
+		l, a = len(s), []
+		if l > 12 or l < 4: return a
+		def helper(r, s, k):
+			if not k:
+				if not s:
+					a.append(r[1:])
+				return
+			if s: helper(r + '.' + s[0], s[1:], k - 1)
+			if len(s) > 1 and s[0] != '0': helper(r + '.' + s[:2], s[2:], k - 1)
+			if len(s) > 2 and s[0] != '0' and int(s[:3]) < 256: helper(r + '.' + s[:3], s[3:], k - 1)
+		helper('', s, 4)
+		return a
+
+# 868. Binary Gap
+class Solution:
+	def binaryGap(self, N):
+		r = bin(N)[2:].split('1')[1:-1]
+		if not r: return 0
+		return max(map(len, r))+1
+
+class Solution:
+	def advantageCount(self, A, B):
+		r = [0 for _ in A]
+		A.sort()
+		for b, i in sorted((b, i) for i, b in enumerate(B))[::-1]:
+			if A[-1] > b:
+				r[i] = A.pop()
+			else:
+				r[i] = A.pop(0)
+		return r
+
 if __name__ == '__main__':
 	import time
 	s = time.time()
 
 	S = Solution()
-	print(S.grayCode(3))
+	print(S.advantageCount([2,0,4,1,2], [1,3,0,0,2]))
 
 	e = time.time()
 	print('%f s' % (e - s))

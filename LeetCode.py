@@ -2317,3 +2317,69 @@ class Solution: # 82.25%
 class Solution: # 34.71%
 	def grayCode(self, n):
 		return self.grayCode(n-1) + [2**(n-1) + _ for _ in self.grayCode(n-1)[::-1]] if n else [0]
+
+#————————————————19/5/7———————————————————
+# 93. Restore IP Addresses
+class Solution: # 100.00%
+	def restoreIpAddresses(self, s):
+		l, a = len(s), []
+		if l > 12 or l < 4: return a
+		def helper(r, s, k):
+			if not k:
+				if not s:
+					a.append(r[1:])
+				return
+			if s:
+				helper(r + '.' + s[0], s[1:], k - 1)
+			if len(s) > 1 and s[0] != '0':
+				helper(r + '.' + s[:2], s[2:], k - 1)
+			if len(s) > 2 and s[0] != '0' and int(s[:3]) < 256:
+				helper(r + '.' + s[:3], s[3:], k - 1)
+		helper('', s, 4)
+		return a
+
+# 94. Binary Tree Inorder Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution: # 100.00%
+	def inorderTraversal(self, root):
+		res, stack = [], []
+		while True:
+			while root:
+				stack.append(root)
+				root = root.left
+			if not stack:
+				return res
+			node = stack.pop()
+			res.append(node.val)
+			root = node.right
+
+# 868. Binary Gap
+class Solution: # 99.42%
+	def binaryGap(self, N):
+		r = bin(N)[:2].split('1')[1:-1]
+		if not r: return 0
+		return max(map(len, r))+1
+
+# 869. Reordered Power of 2
+class Solution: # 100.00%
+	r = ['1', '2', '4', '8', '16', '23', '46', '128', '256', '125', '0124', '0248', '0469', '1289', '13468', '23678', '35566', '011237', '122446', '224588', '0145678', '0122579', '0134449', '0368888', '11266777', '23334455', '01466788', '112234778', '234455668', '012356789']
+	def reorderedPowerOf2(self, N):
+		return ''.join(sorted([_ for _ in str(N)])) in self.r
+
+# 870. Advantage Shuffle
+class Solution: # 87.43%
+	def advantageCount(self, A, B):
+		r = [0 for _ in A]
+		A.sort()
+		for b, i in sorted((b, i) for i, b in enumerate(B))[::-1]:
+			if A[-1] > b:
+				r[i] = A.pop()
+			else:
+				r[i] = A.pop(0)
+		return r
