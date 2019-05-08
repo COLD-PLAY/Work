@@ -2383,3 +2383,26 @@ class Solution: # 87.43%
 			else:
 				r[i] = A.pop(0)
 		return r
+
+#————————————————19/5/8———————————————————
+# 871. Minimum Number of Refueling Stops
+class Solution: # 12.77%
+	def minRefuelStops(self, target, startFuel, stations):
+		dp = [startFuel] + [0] * len(stations)
+		for i in range(len(stations)):
+			for t in range(i + 1)[::-1]:
+				if dp[t] >= stations[i][0]:
+					dp[t + 1] = max(dp[t + 1], dp[t] + stations[i][1])
+		for t, d in enumerate(dp):
+			if d >= target:
+				return t
+		return -1
+
+# 171. Excel Sheet Column Number
+class Solution: # 100.00%
+	def titleToNumber(self, s):
+		r = 0
+		for i in range(len(s)):
+			print(r)
+			r += (ord(s[~i]) - ord('A') + 1) * (26 ** i)
+		return r

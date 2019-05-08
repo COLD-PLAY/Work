@@ -438,7 +438,6 @@ if __name__ == '__main__':
 	s = time.time()
 
 	S = Solution()
-	print(S.advantageCount([2,0,4,1,2], [1,3,0,0,2]))
 
 	e = time.time()
 	print('%f s' % (e - s))
