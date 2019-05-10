@@ -2406,3 +2406,66 @@ class Solution: # 100.00%
 			print(r)
 			r += (ord(s[~i]) - ord('A') + 1) * (26 ** i)
 		return r
+
+#————————————————19/5/10———————————————————
+# 102. Binary Tree Level Order Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution: # 97.31%
+	def levelOrder(self, root):
+		queue, res = [], []
+		def helper(root, level):
+			if not root: return
+			if len(res) <= level:
+				res.append([])
+				res[level].append(root.val)
+			else: res[level].append(root.val)
+			helper(root.left, level+1)
+			helper(root.right, level+1)
+		helper(root, 0)
+		return res
+class Solution: # 97.31%
+	def levelOrder(self, root):
+		res, level = [], [root]
+		while root and level:
+			res.append([node.val for node in level])
+			level = [kid for node in level for kid in (node.left, node.right) if kid]
+		return res
+
+# 103. Binary Tree Zigzag Level Order Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#	 def __init__(self, x):
+#		 self.val = x
+#		 self.left = None
+#		 self.right = None
+
+class Solution: # 99.24%
+	def zigzagLevelOrder(self, root):
+		res, level, f = [], [root], 0
+		while root and level:
+			res.append([node.val for node in (level[::-1] if f else level)])
+			level, f = [kid for node in level for kid in (node.left, node.right) if kid], 0 if f else 1
+		return res
+
+# 470. Implement Rand10() Using Rand7()
+# The rand7() API is already defined for you.
+# def rand7():
+# @return a random integer in the range 1 to 7
+
+class Solution: # 14.44%
+	def rand10(self):
+		"""
+		:rtype: int
+		"""
+		i, j = 0, 7
+		while i < 6:
+			i = rand7()
+		while j > 5:
+			j = rand7()
+		return j if (i&1) else j+5

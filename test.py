@@ -438,6 +438,7 @@ if __name__ == '__main__':
 	s = time.time()
 
 	S = Solution()
+	print('草泥马')
 
 	e = time.time()
 	print('%f s' % (e - s))
