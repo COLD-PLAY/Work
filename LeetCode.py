@@ -566,7 +566,7 @@ class Solution:
 		for i in range(1, numRows + 1):
 			res_ = []
 			for j in range(i):
-				res_.append(1 if j == 0 or j == i - 1 else res[-1][j] + res[-1][	])
+				res_.append(1 if j == 0 or j == i - 1 else res[-1][j] + res[-1][j+1])
 			res.append(res_)
 		return res
 
@@ -2469,3 +2469,33 @@ class Solution: # 14.44%
 		while j > 5:
 			j = rand7()
 		return j if (i&1) else j+5
+
+#————————————————19/5/11———————————————————
+# 116. Populating Next Right Pointers in Each Node
+"""
+# Definition for a Node.
+class Node:
+	def __init__(self, val, left, right, next):
+		self.val = val
+		self.left = left
+		self.right = right
+		self.next = next
+"""
+class Solution: # 95.70%
+	def connect(self, root: 'Node') -> 'Node':
+		level = [root]
+		while root and level:
+			for i in range(len(level)-1):
+				level[i].next = level[i+1]
+			level = [kid for node in level for kid in (node.left, node.right) if kid]
+		return root
+
+# 119. Pascal's Triangle II
+class Solution: # 85.27%
+	def getRow(self, rowIndex: int) -> List[int]:
+		res = [1]
+		for i in range(1, rowIndex+1):
+			res.append(1)
+			for j in range(1, i)[::-1]:
+				res[j] = res[j] + res[j-1]
+		return res

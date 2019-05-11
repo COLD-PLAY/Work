@@ -433,12 +433,21 @@ class Solution:
 				r[i] = A.pop(0)
 		return r
 
+class Solution:
+	def getRow(self, rowIndex):
+		res = [1]
+		for i in range(1, rowIndex+1):
+			res.append(1)
+			for j in range(1, i)[::-1]:
+				res[j] = res[j] + res[j-1]
+		return res
+
 if __name__ == '__main__':
 	import time
 	s = time.time()
 
 	S = Solution()
-	print('草泥马')
+	print(S.getRow(5))
 
 	e = time.time()
 	print('%f s' % (e - s))
