@@ -2499,3 +2499,21 @@ class Solution: # 85.27%
 			for j in range(1, i)[::-1]:
 				res[j] = res[j] + res[j-1]
 		return res
+
+# 172. Factorial Trailing Zeroes
+class Solution: # 97.76%
+	def trailingZeroes(self, n: int) -> int:
+		r = 0
+		while n:
+			r += n // 5
+			n //= 5
+		return r
+
+# 202. Happy Number
+class Solution: # 98.04%
+	def isHappy(self, n: int) -> bool:
+		res = []
+		while n not in res:
+			res.append(n)
+			n = sum([int(c)**2 for c in str(n)])
+		return 1 in res
