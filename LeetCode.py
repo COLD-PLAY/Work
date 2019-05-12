@@ -2500,6 +2500,7 @@ class Solution: # 85.27%
 				res[j] = res[j] + res[j-1]
 		return res
 
+#————————————————19/5/12———————————————————
 # 172. Factorial Trailing Zeroes
 class Solution: # 97.76%
 	def trailingZeroes(self, n: int) -> int:
