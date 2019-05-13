@@ -2518,3 +2518,23 @@ class Solution: # 98.04%
 			res.append(n)
 			n = sum([int(c)**2 for c in str(n)])
 		return 1 in res
+
+#————————————————19/5/13———————————————————
+# 135. Candy
+class Solution: # 86.87%
+	def candy(self, ratings: List[int]) -> int:
+		res = [1 for _ in ratings]
+		for i in range(1, len(ratings)):
+			if ratings[i] > ratings[i-1]:
+				res[i] = res[i-1] + 1
+		for i in range(1, len(ratings))[::-1]:
+			if ratings[i-1] > ratings[i]:
+				res[i-1] = max(res[i-1], res[i]+1)
+		return sum(res)
+
+# 392. is Subsequence
+class Solution: # 91.47%
+	def isSubsequence(self, s: str, t: str) -> bool:
+		if not s: return True
+		if s[0] not in t: return False
+		return self.isSubsequence(s[1:], t[t.index(s[0])+1:])
