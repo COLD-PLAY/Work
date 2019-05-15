@@ -1,7 +1,7 @@
 # 3. Longest Substring Without Repeating Characters
 class Solution:
 	def lengthOfLongestSubstring(self, s: str) -> int:
-		max = 0
+    		max = 0
 		res_str = ''
 		length = len(s)
 		for i in range(length):	 
@@ -2538,3 +2538,33 @@ class Solution: # 91.47%
 		if not s: return True
 		if s[0] not in t: return False
 		return self.isSubsequence(s[1:], t[t.index(s[0])+1:])
+
+#————————————————19/5/15———————————————————
+# 179. Largest Number
+class Solution: # 17.10%
+	def largestNumber(self, nums) -> str:
+		nums = [str(_) for _ in nums]
+		for i in range(len(nums)):
+			for j in range(len(nums)-i-1):
+				if nums[j] + nums[j+1] < nums[j+1] + nums[j]:
+					nums[j], nums[j+1] = nums[j+1], nums[j]
+		r = ''.join(nums)
+		return r if r[0] != '0' else '0'
+class Solution: # 99.31% python2
+	def largestNumber(self, nums):
+		r = ''.join(sorted(map(str, nums), lambda x, y: [1, -1][x+y > y+x]))
+		return r if r[0] != '0' else '0'
+
+# 183. Customers Who Never Order
+# Write your MySQL query statement below
+SELECT C.Name Customers FROM # 27.81%
+Customers C
+Where C.Id NOT IN
+(SELECT O.CustomerId FROM
+Orders O)
+# Write your MySQL query statement below
+SELECT C.Name Customers # 89.86%
+FROM Customers C
+LEFT JOIN Orders O
+ON C.Id = O.CustomerId
+WHERE O.CustomerId IS NULL

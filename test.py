@@ -1,18 +1,13 @@
 class Solution:
-	def isSubsequence(self, s: str, t: str) -> bool:
-		if not s: return True
-		if s[0] not in t: return False
-		return self.isSubsequence(s[1:], t[t.index(s[0])+1:])
-
+	def largestNumber(self, nums):
+		r = ''.join(sorted(map(str, nums), lambda x, y: [1, -1][x+y > y+x]))
+		return r if r[0] != '0' else '0'
 if __name__ == '__main__':
 	import time
 	s = time.time()
 
-	a = "leeeeetcode"
-	b = 'yyyyyylyyyyyyeyyyyyeyyyyyyyyyyyyyyyyytyyyyycyyyoyyyyyyyydyyyyyyyeyyyy'
-
 	S = Solution()
-	print(S.isSubsequence(a, b))
+	print(S.largestNumber([824,938,1399,5607,6973,5703,9609,4398,8247]))
 
 	e = time.time()
 	print('%f s' % (e - s))
