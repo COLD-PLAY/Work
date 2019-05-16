@@ -1,7 +1,7 @@
 # 3. Longest Substring Without Repeating Characters
 class Solution:
 	def lengthOfLongestSubstring(self, s: str) -> int:
-    		max = 0
+					max = 0
 		res_str = ''
 		length = len(s)
 		for i in range(length):	 
@@ -2568,3 +2568,64 @@ FROM Customers C
 LEFT JOIN Orders O
 ON C.Id = O.CustomerId
 WHERE O.CustomerId IS NULL
+
+#————————————————19/5/16———————————————————
+# 160. Intersection of Two Linked Lists
+# Definition for singly-linked list.
+# class ListNode(object):
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution(object): # TLE
+	def getIntersectionNode(self, headA, headB):
+		"""
+		:type head1, head1: ListNode
+		:rtype: ListNode
+		"""
+		if not headA or not headB: return None
+		pa, pb = headA, headB
+		while pa is not pb:
+			pa = headA if pa is None else pa.next
+			pb = headB if pb is None else pb.next
+		return pa
+class Solution(object): # 90.82% Brilliant Function
+	def getIntersectionNode(self, headA, headB):
+		pa, pb = headA, headB
+		la, lb = 0, 0
+		while pa:
+			la, pa = la+1, pa.next
+		while pb:
+			lb, pb = lb+1, pb.next
+		pa, pb = headA, headB
+		if la > lb:
+			for i in range(la-lb):
+				pa = pa.next
+		elif lb > la:
+			for i in range(lb-la):
+				pb = pb.next
+		while True:
+			if pa is pb: return pa
+			pa, pb = pa.next, pb.next
+
+# 191. Number of 1 Bits
+class Solution(object): # 99.49%
+	def hammingWeight(self, n):
+		r = 0
+		while n:
+			r, n = r+1, n&(n-1)
+		return r
+
+# 496. Next Greater Element I
+class Solution: # 99.94%
+	def nextGreaterElement(self, n1, n2):
+		d, l = {}, len(n2)
+		for i in range(l)[::-1]:
+			if i == l-1: d[n2[i]] = None
+			elif n2[i] < n2[i+1]: d[n2[i]] = n2[i+1]
+			else:
+				n_g = d[n2[i+1]]
+				while n_g and n2[i] > n_g:
+					n_g = d[n_g]
+				d[n2[i]] = n_g
+		return [d[_] if d[_] else -1 for _ in n1]

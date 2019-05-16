@@ -7,7 +7,6 @@ if __name__ == '__main__':
 	s = time.time()
 
 	S = Solution()
-	print(S.largestNumber([824,938,1399,5607,6973,5703,9609,4398,8247]))
 
 	e = time.time()
 	print('%f s' % (e - s))
