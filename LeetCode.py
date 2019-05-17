@@ -2629,3 +2629,40 @@ class Solution: # 99.94%
 					n_g = d[n_g]
 				d[n2[i]] = n_g
 		return [d[_] if d[_] else -1 for _ in n1]
+
+#————————————————19/5/17———————————————————
+# 884. Uncommon Words from Two Sentences
+class Solution: # 99.88%
+	def uncommonFromSentences(self, A: str, B: str) -> List[str]:
+		d, r = {}, []
+		A, B = A.split(' '), B.split(' ')
+		for sA in A:
+			d[sA] = 1 if sA not in d else d[sA]+1
+		for sB in B:
+			d[sB] = 1 if sB not in d else d[sB]+1
+		for s in d.keys():
+			if d[s] == 1:
+				r.append(s)
+		return r
+
+# 669. Trim a Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+class Solution: # 98.69%
+	def trimBST(self, root: TreeNode, L: int, R: int) -> TreeNode:
+		def helper(r, L, R):
+			if not r: return
+			if r.val < L:
+				return helper(r.right, L, R)
+			elif r.val > R:
+				return helper(r.left, L, R)
+			else:
+				r.left = helper(r.left, L, R)
+				r.right = helper(r.right, L, R)
+				return r
+		return helper(root, L, R)
