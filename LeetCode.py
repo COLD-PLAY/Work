@@ -2666,3 +2666,26 @@ class Solution: # 98.69%
 				r.right = helper(r.right, L, R)
 				return r
 		return helper(root, L, R)
+
+#————————————————19/5/18———————————————————
+# 739. Daily Temperatures
+class Solution: # 93.37%
+	def dailyTemperatures(self, T: List[int]) -> List[int]:
+		r = [0 for t in T]
+		for i in range(len(T)-1)[::-1]:
+			j = i+1
+			while True:
+				if T[i] < T[j]:
+					r[i] = j-i
+					break
+				if not r[j]:
+					r[i] = 0
+					break
+				j = j+r[j]
+		return r
+
+# 575. Distribute Candies
+class Solution: # 98.06%
+	def distributeCandies(self, candies: List[int]) -> int:
+		r, l = len(set(candies)), len(candies)
+		return r if r < l // 2 else l // 2
