@@ -2689,3 +2689,25 @@ class Solution: # 98.06%
 	def distributeCandies(self, candies: List[int]) -> int:
 		r, l = len(set(candies)), len(candies)
 		return r if r < l // 2 else l // 2
+
+#————————————————19/5/19———————————————————
+# 463. Island Perimeter
+class Solution: # 92.16%
+	def islandPerimeter(self, grid: List[List[int]]) -> int:
+		h, w, r = len(grid), len(grid[0]), 0
+		for i in range(h):
+			for j in range(w):
+				if grid[i][j] == 1:
+					r += 4 - (grid[i-1][j] if i > 0 else 0) - (grid[i+1][j] if i < h-1 else 0) - (grid[i][j-1] if j > 0 else 0) - (grid[i][j+1] if j < w-1 else 0)
+		return r 
+
+# 442. Find All Duplicates in an Array
+class Solution: # 53.38%
+	def findDuplicates(self, nums: List[int]) -> List[int]:
+		r = []
+		for x in nums:
+			if nums[abs(x)-1] < 0:
+				r.append(abs(x))
+			else:
+				nums[abs(x)-1] *= -1
+		return r
