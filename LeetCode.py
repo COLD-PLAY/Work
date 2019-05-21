@@ -2711,3 +2711,39 @@ class Solution: # 53.38%
 			else:
 				nums[abs(x)-1] *= -1
 		return r
+
+#————————————————19/5/21———————————————————
+# 1047. Remove All Adjacent Duplicates In String
+class Solution: # 50.80%
+	def removeDuplicates(self, s: str) -> str:
+		c, l = 0, len(s)
+		while c < len(s)-1:
+			if s[c] == s[c+1]:
+				s = s[:c] + s[c+2:]
+				c = c-1 if c else 0
+				continue
+			c += 1
+		return s
+class Solution: # 93.16%
+	def removeDuplicates(self, s: str) -> str:
+		r = []
+		for c in s:
+			if r and c == r[-1]:
+				r.pop()
+				continue
+			r.append(c)
+		return ''.join(r)
+
+# 841. Keys and Rooms
+class Solution: # 57.23%
+	def canVisitAllRooms(self, rooms):
+		visited = [False] * len(rooms)
+		visited[0] = True
+		stack = [0]
+		while stack:
+			n = stack.pop()
+			for _ in rooms[n]:
+				if not visited[_]:
+					stack.append(_)
+					visited[_] = True
+		return reduce(lambda x, y: x and y, visited)
