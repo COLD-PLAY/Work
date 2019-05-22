@@ -2747,3 +2747,28 @@ class Solution: # 57.23%
 					stack.append(_)
 					visited[_] = True
 		return reduce(lambda x, y: x and y, visited)
+
+#————————————————19/5/22———————————————————
+# 412. Fizz Buzz
+class Solution: # 90.78%
+	def fizzBuzz(self, n: int) -> List[str]:
+		r = []
+		for i in range(1, n+1):
+			if i % 15 == 0:
+				r.append("FizzBuzz")
+			elif i % 3 == 0:
+				r.append("Fizz")
+			elif i % 5 == 0:
+				r.append("Buzz")
+			else:
+				r.append(str(i))
+		return r
+
+# 406. Queue Reconstruction by Height
+class Solution: # 88.53%
+	def reconstructQueue(self, p):
+		p, r, h = sorted(p, key=lambda x: (x[0], -x[1])), [0] * len(p), [i for i in range(len(p))]
+		for _ in p:
+			r[h[_[1]]] = _
+			h.pop(_[1])
+		return r
