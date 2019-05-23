@@ -11,9 +11,8 @@ if __name__ == '__main__':
 	s = time.time()
 
 	S = Solution()
-	p = [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
-	r = S.reconstructQueue(p)
-	print(r)
+	a = '233' + 'i'*2
+	print(a)
 
 	e = time.time()
 	print('%f s' % (e - s))

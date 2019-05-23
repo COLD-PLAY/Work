@@ -2772,3 +2772,29 @@ class Solution: # 88.53%
 			r[h[_[1]]] = _
 			h.pop(_[1])
 		return r
+
+#————————————————19/5/23———————————————————
+class Solution:
+	def calPoints(self, ops: List[str]) -> int:
+		r = []
+		for op in ops:
+			if op.isdigit():
+				r.append(int(op))
+			elif op == 'C':
+				r.pop()
+			elif op == 'D':
+				r.append(2*r[-1])
+			else:
+				r.append(r[-1]+r[-2])
+		return sum(r)
+
+# 824. Goat Latin
+class Solution:
+	def toGoatLatin(self, S: str) -> str:
+		words, r = S.split(' '), ''
+		for i, word in enumerate(words):
+			if word[0] in ['a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U']:
+				r.append(word + 'ma' + 'a'*(i+1))
+			else:
+				r.append(word[1:] + word[0] + 'ma' + 'a'*(i+1))
+		return ' '.join(r)
