@@ -2774,12 +2774,15 @@ class Solution: # 88.53%
 		return r
 
 #————————————————19/5/23———————————————————
-class Solution:
+# 682. Baseball Game
+class Solution: # 92.99%
 	def calPoints(self, ops: List[str]) -> int:
 		r = []
 		for op in ops:
 			if op.isdigit():
 				r.append(int(op))
+			elif op[0] == '-':
+				r.append(-int(op[1:]))
 			elif op == 'C':
 				r.pop()
 			elif op == 'D':
@@ -2789,12 +2792,43 @@ class Solution:
 		return sum(r)
 
 # 824. Goat Latin
-class Solution:
+class Solution: # 99.25%
 	def toGoatLatin(self, S: str) -> str:
-		words, r = S.split(' '), ''
+		words, r = S.split(' '), []
 		for i, word in enumerate(words):
 			if word[0] in ['a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U']:
 				r.append(word + 'ma' + 'a'*(i+1))
 			else:
 				r.append(word[1:] + word[0] + 'ma' + 'a'*(i+1))
 		return ' '.join(r)
+
+#————————————————19/5/24———————————————————
+# 566. Reshape the Matrix
+class Solution: # 91.74%
+	def matrixReshape(self, A, r, c):
+		h, w = len(A), len(A[0])
+		if h*w != r*c or (h == r and w == c):
+			return A
+		C = []
+		for _ in A:
+			for __ in _:
+				C.append(__)
+		return [C[i:i+c] for i in range(0, len(C), c)]
+
+# 931. Minimum Falling Path Sum
+class Solution: # 32.45%
+	def minFallingPathSum(self, A):
+		l = len(A)
+		dp = [[0 for _ in range(l)] for _ in range(l)]
+
+		for i in range(l):
+			dp[0][i] = A[0][i]
+
+		for i in range(1, l):
+			for j in range(l):
+				dp[i][j] = dp[i-1][j] + A[i][j]
+				if j < l-1:
+					dp[i][j] = min(dp[i][j], dp[i-1][j+1] + A[i][j])
+				if j>0:
+					dp[i][j] = min(dp[i][j], dp[i-1][j-1] + A[i][j])
+		return min(dp[l-1])
