@@ -2829,6 +2829,20 @@ class Solution: # 32.45%
 				dp[i][j] = dp[i-1][j] + A[i][j]
 				if j < l-1:
 					dp[i][j] = min(dp[i][j], dp[i-1][j+1] + A[i][j])
-				if j>0:
+				if j > 0:
 					dp[i][j] = min(dp[i][j], dp[i-1][j-1] + A[i][j])
 		return min(dp[l-1])
+
+#————————————————19/5/25———————————————————
+# 1043. Partition Array for Maximum Sum
+class Solution: # 10.30%
+	def maxSumAfterPartitioning(self, A, K):
+		dp = [0] * (len(A)+1)
+		for i in range(1, len(A)+1):
+			dp[i] = max([(dp[i-j] + max(A[i-j:i])*j) for j in range(1, min(K+1, i+1))])
+		return dp[-1]
+
+# 1009. Complement of Base 10 Integer
+class Solution: # 94.78%
+	def bitwiseComplement(self, N):
+		return sum([2**i*(b == '0') for i, b in enumerate(bin(N)[:1:-1])])
