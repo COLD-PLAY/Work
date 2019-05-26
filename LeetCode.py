@@ -2846,3 +2846,42 @@ class Solution: # 10.30%
 class Solution: # 94.78%
 	def bitwiseComplement(self, N):
 		return sum([2**i*(b == '0') for i, b in enumerate(bin(N)[:1:-1])])
+
+#————————————————19/5/26———————————————————
+# 890. Find and Replace Pattern
+class Solution: # 99.65%
+	def findAndReplacePattern(self, words: List[str], pattern: str) -> List[str]:
+		r = []
+		def helper(word, pattern):
+			 d, used, new_word = dict(), set(), ''
+			 for i in range(len(word)):
+			 	if word[i] in d:
+			 		new_word += d[word[i]]
+			 	else:
+			 		if pattern[i] in used:
+			 			break
+			 		else:
+			 			d[word[i]] = pattern[i]
+			 			used.add(pattern[i])
+			 			new_word += pattern[i]
+			 return new_word == pattern
+
+		for word in words:
+			if helper(word, pattern):
+				r.append(word)
+		return r
+
+# 657. Robot Return to Origin
+class Solution: # 53.11%
+	def judgeCircle(self, moves: str) -> bool:
+		x, y = 0, 0
+		for move in moves:
+			if move == 'U':
+				y += 1
+			elif move == 'D':
+				y -= 1
+			elif move == 'L':
+				x -= 1
+			else:
+				x += 1
+		return (x, y) == (0, 0)
