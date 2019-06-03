@@ -2885,3 +2885,25 @@ class Solution: # 53.11%
 			else:
 				x += 1
 		return (x, y) == (0, 0)
+
+#————————————————19/6/3———————————————————
+# 1051. Height Checker
+class Solution: # 97.71%
+	def heightChecker(self, heights: List[int]) -> int:
+		l, r = sorted(heights), 0
+		for i in range(len(l)):
+			if l[i] != heights[i]:
+				r += 1
+		return r
+
+# 950. Reveal Cards In Increasing Order
+class Solution: # 87.23%
+	def deckRevealedIncreasing(self, deck: List[int]) -> List[int]:
+		deck.sort(reverse=True)
+		r, l = [deck[0]], len(deck)
+		for i in range(1, l):
+			t = r.pop()
+			r.insert(0, t)
+			r.insert(0, deck[i])
+
+		return r

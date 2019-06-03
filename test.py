@@ -7,9 +7,8 @@ if __name__ == '__main__':
 	import time
 	s = time.time()
 
-	S = Solution()
-	r = S.bitwiseComplement(10)
-	print(r)
+	a = [1, 2, 3]
+	print(a[:-1])
 
 	e = time.time()
 	print('%f s' % (e - s))
