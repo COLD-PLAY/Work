@@ -2907,3 +2907,34 @@ class Solution: # 87.23%
 			r.insert(0, deck[i])
 
 		return r
+
+#————————————————19/6/9———————————————————
+# 461. Hamming Distance
+class Solution: # 93.94%
+	def hammingDistance(self, x: int, y: int) -> int:
+		xb, yb, r = [*bin(x)[2:]], [*bin(y)[2:]], 0
+		while xb and yb:
+			if xb.pop() != yb.pop():
+				r += 1
+		while xb:
+			if xb.pop() == '1':
+				r += 1
+		while yb:
+			if yb.pop() == '1':
+				r += 1
+		return r
+
+# 728. Self Dividing Numbers
+class Solution: # 75.97%
+	def selfDividingNumbers(self, left: int, right: int) -> List[int]:
+		r = []
+		def helper(num):
+			for ch in str(num):
+				if ch == '0' or num % int(ch):
+					return False
+			return True
+
+		for i in range(left, right+1):
+			if helper(i):
+				r.append(i)
+		return r

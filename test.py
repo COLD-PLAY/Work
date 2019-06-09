@@ -7,8 +7,9 @@ if __name__ == '__main__':
 	import time
 	s = time.time()
 
-	a = [1, 2, 3]
-	print(a[:-1])
+	x, y = 1, 4
+	xb, yb = [*bin(x)[2:]], [*bin(y)[2:]]
+	print(yb)
 
 	e = time.time()
 	print('%f s' % (e - s))
