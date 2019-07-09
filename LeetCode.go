@@ -1,13 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"strings"
+	"strconv"
 )
-
-func main() {
-	fmt.Println("Hello World!")
-}
 
 // Definition for singly-linked list.
 type ListNode struct {
@@ -87,4 +83,86 @@ func minimumTotal(T [][]int) int {
 		}
 	}
 	return res
+}
+
+//————————————————19/7/9———————————————————
+// 139. Word Break 100.00%
+func wordBreak(s string, wordDict []string) bool {
+	i, j, l := 0, 0, len(s)
+	var dp = make([]bool, l)
+	for i = 0; i < l; i++ {
+		if isInWordDicts(s[:i+1], wordDict) {
+			dp[i] = true
+			continue
+		}
+		if i == 0 {
+			dp[i] = isInWordDicts(s[:1], wordDict)
+		} else {
+			for j = 0; j < i; j++ {
+				if dp[j] {
+					if isInWordDicts(s[j+1:i+1], wordDict) {
+						dp[i] = true
+						break
+					}
+				}
+			}
+			if j == i {
+				dp[i] = false
+			}
+		}
+	}
+	return dp[len(s)-1]
+}
+func isInWordDicts(s string, wordDict []string) bool {
+	for _, word := range wordDict {
+		if s == word {
+			return true
+		}
+	}
+	return false
+}
+
+// 165. Compare Version Numbers 100.00%
+func compareVersion(version1 string, version2 string) int {
+	vs1, vs2 := strings.Split(version1, "."), strings.Split(version2, ".")
+	l1, l2 := len(vs1), len(vs2)
+	var min, i int
+	if l1 < l2 {
+		min = l1
+	} else {
+		min = l2
+	}
+	for i = 0; i < min; i++ {
+		v1, _ := strconv.Atoi(vs1[i])
+		v2, _ := strconv.Atoi(vs2[i])
+		if v1 == v2 {
+			continue
+		} else {
+			if v1 > v2 {
+				return 1
+			} else {
+				return -1
+			}
+		}
+	}
+	if l1 == l2 {
+		return 0
+	} else {
+		if l1 > l2 {
+			for i = min; i < l1; i++ {
+				v1, _ := strconv.Atoi(vs1[i])
+				if v1 != 0 {
+					return 1
+				}
+			}
+		} else {
+			for i = min; i < l2; i++ {
+				v2, _ := strconv.Atoi(vs2[i])
+				if v2 != 0 {
+					return -1
+				}
+			}
+		}
+	}
+	return 0
 }
