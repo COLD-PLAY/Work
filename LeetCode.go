@@ -166,3 +166,78 @@ func compareVersion(version1 string, version2 string) int {
 	}
 	return 0
 }
+
+//————————————————19/7/10———————————————————
+// 221. Maximal Square 100.00%
+func maximalSquare(M [][]byte) int {
+	if len(M) == 0 {
+		return 0
+	}
+	h, w := len(M), len(M[0])
+	R, Max := make([][]int, h), 0
+	for i := 0; i < h; i++ {
+		R[i] = make([]int, w)
+	}
+	for i := 0; i < h; i++ {
+		if M[i][0] == '1' {
+			R[i][0] = 1
+		} else {
+			R[i][0] = 0
+		}
+		if Max < R[i][0] {
+			Max = R[i][0]
+		}
+	}
+	for j := 0; j < w; j++ {
+		if M[0][j] == '1' {
+			R[0][j] = 1
+		} else {
+			R[0][j] = 0
+		}
+		if Max < R[0][j] {
+			Max = R[0][j]
+		}
+	}
+	for i := 1; i < h; i++ {
+		for j := 1; j < w; j++ {
+			if M[i][j] == '1' {
+				if R[i-1][j] < R[i][j-1] {
+					if R[i-1][j] < R[i-1][j-1] {
+						R[i][j] = R[i-1][j] + 1
+					} else {
+						R[i][j] = R[i-1][j-1] + 1
+					}
+				} else {
+					if R[i][j-1] < R[i-1][j-1] {
+						R[i][j] = R[i][j-1] + 1
+					} else {
+						R[i][j] = R[i-1][j-1] + 1
+					}
+				}
+				if Max < R[i][j] {
+					Max = R[i][j]
+				}
+			}
+		}
+	}
+	return Max * Max
+}
+
+// 459. Repeated Substring Pattern 28.87%
+func repeatedSubstringPattern(s string) bool {
+	i, l := 0, len(s)
+	if l < 2 {
+		return false
+	}
+	for i = 0; i < l / 2; i++ {
+		if l % (i+1) == 0 {
+			if isRepeatedSubstring(s[:i+1], s) {
+				break
+			}
+		}
+	}
+	return i != l / 2
+}
+func isRepeatedSubstring(sub, s string) bool {
+	return strings.Replace(s, sub, "", -1) == ""
+}
