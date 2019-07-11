@@ -3,6 +3,7 @@ package main
 import (
 	"strings"
 	"strconv"
+	"fmt"
 )
 
 // Definition for singly-linked list.
@@ -240,4 +241,44 @@ func repeatedSubstringPattern(s string) bool {
 }
 func isRepeatedSubstring(sub, s string) bool {
 	return strings.Replace(s, sub, "", -1) == ""
+}
+
+//————————————————19/7/11———————————————————
+// 217. Contains Duplicate 98.57%
+func containsDuplicate(nums []int) bool {
+	ll := len(nums)
+	tab := make(map[int]int, ll)
+	for _, num := range nums {
+		if _, ok := tab[num]; ok {
+			return true
+		} else {
+			tab[num] = 1
+		}
+	}
+	return false
+}
+
+// 228. Summary Ranges 100.00%
+func summaryRanges(nums []int) []string {
+	var res []string
+	if len(nums) == 0 {
+		return res
+	}
+	var pre, ll, i, start int
+	ll, pre = len(nums), nums[0]
+	for i = 1; i <= ll; i++ {
+		start = i-1
+		for i < ll && pre == nums[i] - 1 {
+			pre, i = nums[i], i+1
+		}
+		if i < ll {
+			pre = nums[i]
+		}
+		if start == i-1 {
+			res = append(res, fmt.Sprintf("%d", nums[start]))
+		} else {
+			res = append(res, fmt.Sprintf("%d->%d", nums[start], nums[i-1]))
+		}
+	}
+	return res
 }
