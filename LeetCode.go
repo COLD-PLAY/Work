@@ -282,3 +282,44 @@ func summaryRanges(nums []int) []string {
 	}
 	return res
 }
+
+//————————————————19/7/12———————————————————
+// 148. Sort List 20.07%
+func sortList(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+	var p = head
+	var a []int
+	for p != nil {
+		a = append(a, p.Val)
+		p = p.Next
+	}
+	l := len(a)
+	quickSort(a, 0, l-1)
+	p = head
+	for _, v := range a {
+		p.Val = v
+		p = p.Next
+	}
+	return head
+}
+func quickSort(a []int, s, e int) {
+	if s >= e {
+		return
+	}
+	i, j, k := s, e, a[s]
+	for i < j {
+		for i < j && a[j] >= k {
+			j--
+		}
+		a[i] = a[j]
+		for i < j && a[i] <= k {
+			i++
+		}
+		a[j] = a[i]
+	}
+	a[i] = k
+	quickSort(a, s, i-1)
+	quickSort(a, i+1, e)
+}

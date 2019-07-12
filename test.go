@@ -5,18 +5,28 @@ import (
 	// "strings"
 )
 func main() {
-	// const INT_MAX = int(^uint(0) >> 1)
-	// fmt.Println(INT_MAX)
-	// a := "233333"
-	// fmt.Println(a[0:1])
-	// b := make([]bool, len(a))
-	// fmt.Println(b)
-	// strings.Replace(a, "2", "33", -1)
-	// fmt.Println(a)
-	// arr := make([]int, 12)
-	// for _, v := range arr {
-	// 	fmt.Println(v)
-	// }
-	var res []string
-	fmt.Println(len(res))
+	var a = []int{4,19,14,5,-3,1,8,5,11,15}
+	quickSort(a, 0, 9)
+	for _, v := range a {
+		fmt.Println(v)
+	}
+}
+func quickSort(a []int, s, e int) {
+	if s >= e {
+		return
+	}
+	i, j, k := s, e, a[s]
+	for i < j {
+		for i < j && a[j] >= k {
+			j--
+		}
+		a[i] = a[j]
+		for i < j && a[i] <= k {
+			i++
+		}
+		a[j] = a[i]
+	}
+	a[i] = k
+	quickSort(a, s, i-1)
+	quickSort(a, i+1, e)
 }
