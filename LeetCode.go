@@ -323,3 +323,53 @@ func quickSort(a []int, s, e int) {
 	quickSort(a, s, i-1)
 	quickSort(a, i+1, e)
 }
+
+//————————————————19/7/13———————————————————
+// 1073. Adding Two Negabinary Numbers 78.05%
+func addNegabinary(a1, a2 []int) []int {
+	var c, i, j = 0, len(a1)-1, len(a2)-1
+	var res []int
+	for i >= 0 || j >= 0 || c != 0 {
+		if i >= 0 {
+			c += a1[i]
+			i -= 1
+		}
+		if j >= 0 {
+			c += a2[j]
+			j -= 1
+		}
+		res = append(res, c & 1)
+		c = -(c >> 1)
+	}
+	for len(res) > 1 && res[len(res)-1] == 0 {
+		res = res[:len(res)-1]
+	}
+	i, j = 0, len(res)-1
+	for i < j {
+		res[i], res[j] = res[j], res[i]
+		i, j = i+1, j-1
+	}
+	return res
+}
+
+// 837. New 21 Game 100.00% 搞不懂…
+func new21Game(N int, K int, W int) float64 {
+	if K == 0 || N >= K + W {
+		return 1.0
+	}
+	var dp = make([]float64, N+1)
+	dp[0] = 1.0
+	var Wsum, res = 1.0, 0.0
+	for i := 1; i <= N; i++ {
+		dp[i] = Wsum / float64(W)
+		if i < K {
+			Wsum += dp[i]
+		} else {
+			res += dp[i]
+		}
+		if i >= W {
+			Wsum -= dp[i-W]
+		}
+	}
+	return res
+}
