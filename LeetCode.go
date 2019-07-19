@@ -376,29 +376,54 @@ func new21Game(N int, K int, W int) float64 {
 }
 
 //————————————————19/7/19———————————————————
-// 632. Smallest Range
-type TriadHeap [][3]int
-func (h *TriadHeap) Push(x interface{}) {
-	*h = append(*h, x)
+// 98. Validate Binary Search Tree
+// Definition for a binary tree node.
+type TreeNode struct { // 98.22%
+	Val int
+	Left *TreeNode
+	Right *TreeNode
 }
-func (h *TriadHeap) Pop() interface{} {
-	 old := *h
-	 n := len(old)
-	 x := old[n-1]
-	 *h = old[0:n-1]
-	 return x
-}
-func smallestRange(A [][]int) []int {
-	h := &TriadHeap{}
-	heap.Init(h)
-	hp := [3]int
-	for i, row := range A {
-		var hp = [3]int{row[0], i, 0}
-		h.Push(hp)
+var orders []int
+func inOrder(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	if root.Left != nil {
+		inOrder(root.Left)
+	}
+	orders = append(orders, root.Val)
+	if root.Right != nil {
+		inOrder(root.Right)
 	}
 }
+func isValidBST(root *TreeNode) bool {
+	orders = orders[:0]
+	inOrder(root)
+	for i := 0; i < len(orders) - 1; i++ {
+		if orders[i] >= orders[i+1] {
+			return false
+		}
+	}
+	return true
+}
 
-// 1094. Car Pooling
-func carPooling(trips [][]int, capacity int) bool {
-    
+// 451. Sort Characters By Frequency
+func frequencySort(s string) string {
+	hT := make(map[string]int)
+	var res = ""
+	for i, _ := range s {
+		ss := s[i:i+1]
+		if _, ok := hT[ss]; ok {
+			hT[ss] += 1
+		} else {
+			hT[ss] = 1
+		}
+	}
+	l := len(hT)
+	for i := 0; i < l; i++ {
+		ll := len(hT)
+		for j := 0; j < ll; j++ {
+			
+		}
+	}
 }
