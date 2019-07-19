@@ -397,3 +397,8 @@ func smallestRange(A [][]int) []int {
 		h.Push(hp)
 	}
 }
+
+// 1094. Car Pooling
+func carPooling(trips [][]int, capacity int) bool {
+    
+}
