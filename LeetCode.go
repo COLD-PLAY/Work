@@ -4,6 +4,7 @@ import (
 	"strings"
 	"strconv"
 	"fmt"
+	"container/heap"
 )
 
 // Definition for singly-linked list.
@@ -374,28 +375,25 @@ func new21Game(N int, K int, W int) float64 {
 	return res
 }
 
-//————————————————19/7/16———————————————————
+//————————————————19/7/19———————————————————
 // 632. Smallest Range
-func smallestRange(nums [][]int) []int {
-	var (
-		l, i, j, INT_MAX, INT_MIN int // length, index
-		mnums [][2]int // set the min&max value of arr
-		s, e int
-	)
-	l, mnums = len(nums), make([][2]int, l)
-	INT_MAX, INT_MIN = int(^uint(0) >> 1), ^int(0)
-	for i = 0; i < l; i++ {
-		mnums[i][0], mnums[i][1] = INT_MAX, INT_MIN
+type TriadHeap [][3]int
+func (h *TriadHeap) Push(x interface{}) {
+	*h = append(*h, x)
+}
+func (h *TriadHeap) Pop() interface{} {
+	 old := *h
+	 n := len(old)
+	 x := old[n-1]
+	 *h = old[0:n-1]
+	 return x
+}
+func smallestRange(A [][]int) []int {
+	h := &TriadHeap{}
+	heap.Init(h)
+	hp := [3]int
+	for i, row := range A {
+		var hp = [3]int{row[0], i, 0}
+		h.Push(hp)
 	}
-	for i = 0; i < l; i++ {
-		for j = 0; j < len(nums[i]); j++ {
-			if mnums[i][0] > nums[i][j] {
-				mnums[i][0] = nums[i][j]
-			}
-			if mnums[i][1] < nums[i][j] {
-				mnums[i][1] = nums[i][j]
-			}
-		}
-	}
-	
 }
