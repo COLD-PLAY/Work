@@ -373,3 +373,29 @@ func new21Game(N int, K int, W int) float64 {
 	}
 	return res
 }
+
+//————————————————19/7/16———————————————————
+// 632. Smallest Range
+func smallestRange(nums [][]int) []int {
+	var (
+		l, i, j, INT_MAX, INT_MIN int // length, index
+		mnums [][2]int // set the min&max value of arr
+		s, e int
+	)
+	l, mnums = len(nums), make([][2]int, l)
+	INT_MAX, INT_MIN = int(^uint(0) >> 1), ^int(0)
+	for i = 0; i < l; i++ {
+		mnums[i][0], mnums[i][1] = INT_MAX, INT_MIN
+	}
+	for i = 0; i < l; i++ {
+		for j = 0; j < len(nums[i]); j++ {
+			if mnums[i][0] > nums[i][j] {
+				mnums[i][0] = nums[i][j]
+			}
+			if mnums[i][1] < nums[i][j] {
+				mnums[i][1] = nums[i][j]
+			}
+		}
+	}
+	
+}
