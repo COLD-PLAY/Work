@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"fmt"
 	"container/heap"
+	"math"
 )
 
 // Definition for singly-linked list.
@@ -407,7 +408,7 @@ func isValidBST(root *TreeNode) bool {
 	return true
 }
 
-// 451. Sort Characters By Frequency
+// 451. Sort Characters By Frequency 17.92%
 func frequencySort(s string) string {
 	hT := make(map[string]int)
 	var res = ""
@@ -421,9 +422,59 @@ func frequencySort(s string) string {
 	}
 	l := len(hT)
 	for i := 0; i < l; i++ {
-		ll := len(hT)
-		for j := 0; j < ll; j++ {
-			
+		max, key := ^int(^uint(0) >> 1), ""
+		for k, v := range hT {
+			if max < v {
+				max, key = v, k
+			}
+		}
+		for j := 0; j < max; j++ {
+			res += key
+		}
+		delete(hT, key)
+	}
+	return res
+}
+
+//————————————————19/7/20———————————————————
+// 594. Longest Harmonious Subsequence 100.00%
+func findLHS(nums []int) int {
+	hT, res := make(map[int]int), 0
+    for _, num := range nums {
+		if _, ok := hT[num]; ok {
+			hT[num] += 1
+		} else {
+			hT[num] = 1
 		}
 	}
+	for k, v := range hT {
+		if _, ok := hT[k+1]; ok {
+			l := v + hT[k+1]
+			if l > res {
+				res = l
+			}
+		}
+	}
+	return res
+}
+
+// 386. Lexicographical Numbers 33.33%
+func dfs(cur, n int, res *[]int) {
+	if cur > n {
+		return
+	}
+	*res = append(*res, cur)
+	for i := 0; i < 10; i++ {
+		if 10 * cur + i > n {
+			return
+		}
+		dfs(10 * cur + i, n, res)
+	}
+}
+func lexicalOrder(n int) []int {
+	var res []int
+	for i := 1; i < 10; i++ {
+		dfs(i, n, &res)
+	}
+	return res
 }
