@@ -4,6 +4,8 @@ import (
 	"strings"
 	"strconv"
 	"fmt"
+	"sort"
+	"encoding/json"
 )
 
 // Definition for singly-linked list.
@@ -473,6 +475,82 @@ func lexicalOrder(n int) []int {
 	var res []int
 	for i := 1; i < 10; i++ {
 		dfs(i, n, &res)
+	}
+	return res
+}
+
+//————————————————19/7/22———————————————————
+// 455. Assign Cookies 94.68%
+func findContentChildren(g []int, s []int) int {
+	sort.Ints(g)
+	sort.Ints(s)
+	res := 0
+    for len(g) != 0 && len(s) != 0 {
+		if g[0] > s[0]{
+
+		} else {
+			res += 1
+			g = g[1:]
+		}
+		s = s[1:]
+	}
+	return res
+}
+
+// 748. Shortest Completing Word 6.85%
+func isCompletingWord(char_frequency map[rune]int, word string) bool {
+	for _, ch := range word {
+		if ch < 91 {
+			ch += 32
+		}
+		if _, ok := char_frequency[ch]; ok {
+			char_frequency[ch] -= 1
+		}
+	}
+	for _, v := range char_frequency {
+		if v > 0 {
+			return false
+		}
+	}
+	return true
+}
+func shortestCompletingWord(licensePlate string, words []string) string {
+	var (
+		res = ""
+		char_frequency = make(map[rune]int)
+	)
+	for _, ch := range licensePlate {
+		if (64 < ch && ch < 91) || (96 < ch && ch < 123) {
+			if ch < 91 {
+				ch += 32
+			}
+			if _, ok := char_frequency[ch]; ok {
+				char_frequency[ch] += 1
+			} else {
+				char_frequency[ch] = 1
+			}
+		}
+	}
+	char_frequency_json, err := json.Marshal(char_frequency)
+	if err != nil {
+
+	}
+	for _, word := range words {
+		char_frequency__ := make(map[rune]int)
+		err := json.Unmarshal(char_frequency_json, &char_frequency__)
+		fmt.Println(char_frequency__)
+		if err != nil {
+		
+		}
+		if isCompletingWord(char_frequency__, word) {
+			if len(res) == 0 {
+				res = word
+			} else {
+				if len(res) > len(word) {
+					res = word
+				}
+			}
+		}
 	}
 	return res
 }
