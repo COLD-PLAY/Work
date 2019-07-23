@@ -554,3 +554,48 @@ func shortestCompletingWord(licensePlate string, words []string) string {
 	}
 	return res
 }
+
+//————————————————19/7/23———————————————————
+// 1078. Occurrences After Bigram 100.00%
+func findOcurrences(text string, first string, second string) []string {
+	words := strings.Split(text, " ")
+	var l = len(words)
+    var res []string
+	for i := 0; i < l - 2; i++ {
+		if words[i] == first {
+			if words[i+1] == second {
+				res = append(res, words[i+2])
+			}
+		}
+	}
+	return res
+}
+
+// 299. Bulls and Cows 36.21%
+func getHint(secret string, guess string) string {
+	A, B, l := 0, 0, len(secret)
+	for i := 0; i < l; i++ {
+		if secret[i] == guess[i] {
+			A += 1
+		}
+	}
+	secret_ch := strings.Split(secret, "")
+	guess_ch := strings.Split(guess, "")
+	sort.Strings(secret_ch)
+	sort.Strings(guess_ch)
+
+	for i, j := 0, 0; i < l && j < l; {
+		if secret_ch[i] == guess_ch[j] {
+			i, j, B = i+1, j+1, B+1
+		} else if secret_ch[i] < guess_ch[j] {
+			i += 1
+		} else {
+			j += 1
+		}
+	}
+	if B-A >= 0 {
+		B -= A
+	}
+	res := strconv.Itoa(A) + "A" + strconv.Itoa(B) + "B"
+	return res
+}
