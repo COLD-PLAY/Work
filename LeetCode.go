@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"sort"
 	"encoding/json"
+	"regexp"
 )
 
 // Definition for singly-linked list.
@@ -597,5 +598,39 @@ func getHint(secret string, guess string) string {
 		B -= A
 	}
 	res := strconv.Itoa(A) + "A" + strconv.Itoa(B) + "B"
+	return res
+}
+
+//————————————————19/7/24———————————————————
+// 326. Power of Three 67.06%
+func isPowerOfThree(n int) bool {
+    if n == 3 || n == 1 {
+		return true
+	} else if n % 3 != 0 || n == 0 {
+		return false
+	}
+	return isPowerOfThree(n / 3)
+}
+
+// 609. Find Duplicate File in System 96.88%
+func findDuplicate(paths []string) [][]string {
+	var (
+		res [][]string
+		content2path = make(map[string][]string)
+	)
+    for _, path := range paths {
+		d_files := strings.Split(path, " ")
+		dir, files := d_files[0], d_files[1:]
+		for _, file := range files {
+			file_content := strings.Split(file, "(")
+			file, content := file_content[0], file_content[1]
+			content2path[content] = append(content2path[content], dir + "/" + file)
+		}
+	}
+	for _, v := range content2path {
+		if len(v) > 1 {
+			res = append(res, v)
+		}
+	}
 	return res
 }

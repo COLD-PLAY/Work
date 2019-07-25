@@ -5,6 +5,15 @@ import (
 	// "strings"
 )
 func main() {
-	INT_MIN := ^int(^uint(0) >> 1)
-	fmt.Println(INT_MIN)
+	content2path := make(map[string][]string)
+	if _, ok := content2path["2333"]; ok {
+		fmt.Println("2333")
+	} else {
+		content2path["2333"] = append(content2path["2333"], "liaozhou")
+	}
+
+	for k, v := range content2path {
+		fmt.Println(k)
+		fmt.Println(v)
+	}
 }
