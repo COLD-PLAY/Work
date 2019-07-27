@@ -634,3 +634,69 @@ func findDuplicate(paths []string) [][]string {
 	}
 	return res
 }
+
+//————————————————19/7/27———————————————————
+// 1011. Capacity To Ship Packages Within D Days 78.43%
+func possible(weights []int, D, capacity int) bool {
+	if D == 0 {
+		return len(weights) == 0
+	} else if len(weights) == 0 {
+		return true
+	}
+	sum, next, lw := 0, 0, len(weights)
+	for i, weight := range weights {
+		sum, next = sum + weight, i
+		if sum > capacity {
+			break
+		} else if i == lw - 1 { // 最后一个package
+			next = lw
+		}
+	}
+	return possible(weights[next:], D-1, capacity)
+}
+func shipWithinDays(weights []int, D int) int {
+	l, r := 1, 0
+	for _, v := range weights {
+		r += v
+	}
+	for l < r {
+		m := (l + r) / 2
+		if possible(weights, D, m) {
+			r = m
+		} else {
+			l = m + 1
+		}
+	}
+	return r
+}
+
+// 893. Groups of Special-Equivalent Strings 50.00%
+func numSpecialEquivGroups(A []string) int {
+	res := make(map[string]int)
+	for _, a := range A {
+		even, odd := "", ""
+		for i := 0; i < len(a); i += 2 {
+			even += a[i:i+1]
+		}
+		for i := 1; i < len(a); i += 2 {
+			odd += a[i:i+1]
+		}
+		evens := strings.Split(even, "")
+		sort.Strings(evens)
+		odds := strings.Split(odd, "")
+		sort.Strings(odds)
+		even, odd = "", ""
+		for _, e := range evens {
+			even += e
+		}
+		for _, o := range odds {
+			odd += o
+		}
+		if _, ok := res[even+odd]; ok {
+			res[even+odd] += 1
+		} else {
+			res[even+odd] = 1
+		}
+	}
+	return len(res)
+}
