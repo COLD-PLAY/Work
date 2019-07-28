@@ -2938,3 +2938,29 @@ class Solution: # 75.97%
 			if helper(i):
 				r.append(i)
 		return r
+
+#————————————————19/7/28———————————————————
+# 679. 24 Game 18.18%
+class Solution:
+	def judgePoint24(self, nums: List[int]) -> bool:
+		if len(nums) == 1:
+			return math.isclose(nums[0], 24)
+		return any(self.judgePoint24([x] + rest)
+			for a, b, *rest in itertools.permutations(nums)
+			for x in {a+b, a-b, a*b, b and a/b})
+
+# 1046. Last Stone Weight 96.44%
+class Solution:
+	def lastStoneWeight(self, stones: List[int]) -> int:
+		stones.sort()
+		i = len(stones)-1
+		while i > 0:
+			a = stones.pop()
+			b = stones.pop()
+			if a == b:
+				i -= 2
+			else:
+				i -= 1
+				stones.append(a-b)
+				stones.sort()
+		return 0 if not stones else stones[0]

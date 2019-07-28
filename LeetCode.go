@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"sort"
 	"encoding/json"
-	"regexp"
 )
 
 // Definition for singly-linked list.
@@ -441,7 +440,7 @@ func frequencySort(s string) string {
 // 594. Longest Harmonious Subsequence 100.00%
 func findLHS(nums []int) int {
 	hT, res := make(map[int]int), 0
-    for _, num := range nums {
+	for _, num := range nums {
 		if _, ok := hT[num]; ok {
 			hT[num] += 1
 		} else {
@@ -486,7 +485,7 @@ func findContentChildren(g []int, s []int) int {
 	sort.Ints(g)
 	sort.Ints(s)
 	res := 0
-    for len(g) != 0 && len(s) != 0 {
+	for len(g) != 0 && len(s) != 0 {
 		if g[0] > s[0]{
 
 		} else {
@@ -561,7 +560,7 @@ func shortestCompletingWord(licensePlate string, words []string) string {
 func findOcurrences(text string, first string, second string) []string {
 	words := strings.Split(text, " ")
 	var l = len(words)
-    var res []string
+	var res []string
 	for i := 0; i < l - 2; i++ {
 		if words[i] == first {
 			if words[i+1] == second {
@@ -604,7 +603,7 @@ func getHint(secret string, guess string) string {
 //————————————————19/7/24———————————————————
 // 326. Power of Three 67.06%
 func isPowerOfThree(n int) bool {
-    if n == 3 || n == 1 {
+	if n == 3 || n == 1 {
 		return true
 	} else if n % 3 != 0 || n == 0 {
 		return false
@@ -618,7 +617,7 @@ func findDuplicate(paths []string) [][]string {
 		res [][]string
 		content2path = make(map[string][]string)
 	)
-    for _, path := range paths {
+	for _, path := range paths {
 		d_files := strings.Split(path, " ")
 		dir, files := d_files[0], d_files[1:]
 		for _, file := range files {
