@@ -4,7 +4,7 @@ class Solution:
 					max = 0
 		res_str = ''
 		length = len(s)
-		for i in range(length):	 
+		for i in range(length):
 			if s[i] not in res_str:
 				res_str += s[i]
 				if len(res_str) > max:
@@ -156,7 +156,7 @@ class Solution:
 
 		return length
 
-# 26. Remove Duplicates from Sorted Array 
+# 26. Remove Duplicates from Sorted Array
 # !!!!!!! NOTE:SORTED
 class Solution:
 	def removeDuplicates(self, nums) -> int:
@@ -167,7 +167,7 @@ class Solution:
 			nums[i] = sets[i]
 		return length
 
-# 26. Remove Duplicates from Sorted Array 
+# 26. Remove Duplicates from Sorted Array
 # !!!!!!! NOTE:SORTED
 class Solution:
 	def removeDuplicates(self, nums) -> int:
@@ -665,7 +665,7 @@ class Solution(object): # two pointer 70.05%
 			if not fast or not fast.next: return False
 			slow = slow.next
 			fast = fast.next.next
-			
+
 		return True
 
 # 24. Swap Nodes in Pairs
@@ -675,7 +675,7 @@ class Solution(object): # two pointer 70.05%
 #		 self.val = x
 #		 self.next = None
 
-class Solution(object): # 71.44% 
+class Solution(object): # 71.44%
 	def swapPairs(self, head):
 		"""
 		:type head: ListNode
@@ -842,7 +842,7 @@ class Solution:
 				return l
 			if nums[r] == target:
 				return r
-						
+
 			elif nums[m] < target:
 				if nums[l] > target:
 					l = m + 1
@@ -1596,7 +1596,7 @@ class Codec: # 62.42%
 
 	def encode(self, longUrl):
 		"""Encodes a URL to a shortened URL.
-		
+
 		:type longUrl: str
 		:rtype: str
 		"""
@@ -1610,7 +1610,7 @@ class Codec: # 62.42%
 
 	def decode(self, shortUrl):
 		"""Decodes a shortened URL to its original URL.
-		
+
 		:type shortUrl: str
 		:rtype: str
 		"""
@@ -1828,7 +1828,7 @@ class Solution: # 99.74%
 		return p if f else 1 / p
 
 # 54. Spiral Matrix
-class Solution: # 77.19% 
+class Solution: # 77.19%
 	def spiralOrder(self, m: List[List[int]]) -> List[int]:
 		r = []
 		while m:
@@ -2217,7 +2217,7 @@ class Solution: # 56.28%
 				if self.dfs(b, i, j, w):
 					return True
 		return False
-		
+
 	def dfs(self, b, x, y, w):
 		if not w: return True
 		if x < 0 or x >= len(b) or y < 0 or y >= len(b[0]) or b[x][y] != w[0]: return False
@@ -2699,7 +2699,7 @@ class Solution: # 92.16%
 			for j in range(w):
 				if grid[i][j] == 1:
 					r += 4 - (grid[i-1][j] if i > 0 else 0) - (grid[i+1][j] if i < h-1 else 0) - (grid[i][j-1] if j > 0 else 0) - (grid[i][j+1] if j < w-1 else 0)
-		return r 
+		return r
 
 # 442. Find All Duplicates in an Array
 class Solution: # 53.38%
@@ -2964,3 +2964,44 @@ class Solution:
 				stones.append(a-b)
 				stones.sort()
 		return 0 if not stones else stones[0]
+
+#————————————————19/7/29———————————————————
+# Definition for a binary tree node.
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+# 671. Second Minimum Node In a Binary Tree 60.29%
+class Solution:
+	res = -1
+	def findSecondMinimumValue(self, r: TreeNode) -> int:
+		def helper(r):
+			if not r:
+				return
+			if r.left:
+				if r.left.val > r.val:
+					if self.res == -1 or self.res > r.left.val:
+						self.res = r.left.val
+					helper(r.right)
+				elif r.right.val > r.val:
+					if self.res == -1 or self.res > r.right.val:
+						self.res = r.right.val
+					helper(r.left)
+				else:
+					helper(r.left)
+					helper(r.right)
+
+		helper(r)
+		return self.res
+
+# 357. Count Numbers with Unique Digits 83.93 %
+class Solution:
+	def countNumbersWithUniqueDigits(self, n: int) -> int:
+		options = [9, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+		res, mul = 1, 1
+		for i in range(n if n <= 10 else 10):
+			mul *= options[i]
+			res += mul
+		return res
