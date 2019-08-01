@@ -1,15 +1,11 @@
-# 1009. Complement of Base 10 Integer
-class Solution:
-	def bitwiseComplement(self, N):
-		return sum([2**i*(b == '0') for i, b in enumerate(bin(N)[:1:-1])])
+def test1(A):
+	A = [''.join(sorted(_)) for _ in A]
+	print(A)
 
-if __name__ == '__main__':
-	import time
-	s = time.time()
+def test2():
+	i, j = 0, 1
+	j, i = i, j+1
+	print(j, i)
 
-	x, y = 1, 4
-	xb, yb = [*bin(x)[2:]], [*bin(y)[2:]]
-	print(yb)
-
-	e = time.time()
-	print('%f s' % (e - s))
+if __name__ == "__main__":
+	test2()

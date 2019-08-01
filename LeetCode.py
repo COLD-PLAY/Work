@@ -3038,3 +3038,54 @@ class Solution:
 				continue
 			i, j = min(i, a), min(j, b)
 		return i*j
+
+#————————————————19/8/1———————————————————
+# 1002. Find Common Characters 70.29%
+class Solution:
+	def commonChars(self, A: List[str]) -> List[str]:
+		res = collections.Counter(A[0])
+		for a in A:
+			res &= collections.Counter(a)
+		return list(res.elements())
+class Solution: # 70.29%
+	def commonChars(self, A: List[str]) -> List[str]:
+		r, l = A[0], len(A)
+		for c in r:
+			for i in range(1, l):
+				if c not in A[i]:
+					index = r.index(c)
+					r = r[:index]+r[index+1:]
+					break
+				else:
+					index = A[i].index(c)
+					A[i] = A[i][:index]+A[i][index+1:]
+		return r
+
+# 283. Move Zeroes 5.06%
+class Solution:
+	def moveZeroes(self, n: List[int]) -> None:
+		"""
+		Do not return anything, modify n in-place instead.
+		"""
+		l = len(n)
+		for i in range(l):
+			flag = 1
+			for j in range(l-i-1):
+				if not n[j]:
+					n[j], n[j+1] = n[j+1], n[j]
+					flag = 0
+			if flag:
+				break
+class Solution: # 61.99%
+	def moveZeroes(self, nums: List[int]) -> None:
+		"""
+		Do not return anything, modify nums in-place instead.
+		"""
+		j = 0
+		for n in nums:
+			if n:
+				nums[j] = n
+				j += 1
+		while j < len(nums):
+			nums[j] = 0
+			j += 1
