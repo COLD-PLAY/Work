@@ -3089,3 +3089,36 @@ class Solution: # 61.99%
 		while j < len(nums):
 			nums[j] = 0
 			j += 1
+
+#————————————————19/8/2———————————————————
+# 949. Largest Time for Given Digits 63.83%
+class Solution:
+	def largestTimeFromDigits(self, A: List[int]) -> str:
+		B = sorted(list(itertools.permutations(A)), reverse=True)
+		for b in B:
+			i, j, k, l = b
+			hour = (i*10 + j)
+			minu = (k*10 + l)
+
+			if hour < 24 and minu < 60:
+				return f"{i}{j}:{k}{l}"
+		return ""
+
+# 821. Shortest Distance to a Character 49.30%
+class Solution:
+	def shortestToChar(self, S: str, C: str) -> List[int]:
+		indexs, res = [], []
+		def helper(i, indexs):
+			for j in range(len(indexs)):
+				if i < indexs[j]:
+					return indexs[j] - i if j == 0 else min(indexs[j]-i, i-indexs[j-1])
+			return i-indexs[-1]
+		for i, c in enumerate(S):
+			if c == C:
+				indexs.append(i)
+		for i, c in enumerate(S):
+			if c == C:
+				res.append(0)
+			else:
+				res.append(helper(i, indexs))
+		return res
