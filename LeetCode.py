@@ -3122,3 +3122,43 @@ class Solution:
 			else:
 				res.append(helper(i, indexs))
 		return res
+
+#————————————————19/8/3———————————————————
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+# 257. Binary Tree Paths 59.86%
+class Solution:
+	def binaryTreePaths(self, root: TreeNode) -> List[str]:
+		res = []
+		def helper(root, res_):
+			if not root:
+				return
+			res_ = res_ + [str(root.val)]
+			if not root.left and not root.right:
+				res.append(res_)
+			if root.left:
+				helper(root.left, res_)
+			if root.right:
+				helper(root.right, res_)
+		helper(root, [])
+		print(res)
+		return ["->".join(_) for _ in res]
+
+# 892. Surface Area of 3D Shapes 86.49%
+class Solution:
+	def surfaceArea(self, grid: List[List[int]]) -> int:
+		l, r = len(grid), 0
+		for i in range(l):
+			for j in range(l):
+				if grid[i][j]:
+					r += 2 + grid[i][j]*4
+				if i:
+					r -= min(grid[i][j], grid[i-1][j])*2
+				if j:
+					r -= min(grid[i][j], grid[i][j-1])*2
+		return r
