@@ -3162,3 +3162,47 @@ class Solution:
 				if j:
 					r -= min(grid[i][j], grid[i][j-1])*2
 		return r
+
+#————————————————19/8/4———————————————————
+# 697. Degree of an Array 97.54%
+class Solution:
+	def findShortestSubArray(self, nums: List[int]) -> int:
+		freq, start, end = collections.Counter(nums), {}, {}
+		if len(freq) == len(nums):
+			return 1
+		max_freq = max(freq.values())
+		max_freq_nums = []
+		for num in freq.keys():
+			if freq[num] == max_freq:
+				max_freq_nums.append(num)
+		for i, num in enumerate(nums):
+			if num not in start:
+				start[num] = i
+			end[num] = i
+		return min([end[max_freq_num]-start[max_freq_num]+1 for max_freq_num in max_freq_nums])
+class Solution: # 81.40%
+	def findShortestSubArray(self, nums: List[int]) -> int:
+		freq, start, end, res = {}, {}, {}, len(nums)
+		for i, num in enumerate(nums):
+			if num not in start:
+				start[num] = i
+			end[num] = i
+			freq[num] = freq.get(num, 0)+1
+		if len(freq) == len(nums):
+			return 1
+		max_freq = max(freq.values())
+		for num in freq:
+			if freq[num] == max_freq:
+				res = min(res, end[num]-start[num]+1)
+		return res
+
+# 680. Valid Palindrome II
+class Solution: # Greedy 91.23%
+	def validPalindrome(self, s: str) -> bool:
+		def is_pal(i, j):
+			return s[i:j] == s[i:j][::-1]
+		l = len(s)
+		for i in range(l//2):
+			if s[i] != s[~i]:
+				return is_pal(i, ~i) or is_pal(i+1, l-i)
+		return True

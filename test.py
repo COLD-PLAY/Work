@@ -7,5 +7,10 @@ def test2():
 	j, i = i, j+1
 	print(j, i)
 
+def test3():
+	a = "abbcc"
+	print(a)
+	print(a[0:-1][::-1])
+
 if __name__ == "__main__":
-	test2()
+	test3()
