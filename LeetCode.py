@@ -3206,3 +3206,41 @@ class Solution: # Greedy 91.23%
 			if s[i] != s[~i]:
 				return is_pal(i, ~i) or is_pal(i+1, l-i)
 		return True
+
+#————————————————19/8/5———————————————————
+# Repeated String Match 68.16%
+class Solution:
+	def repeatedStringMatch(self, A: str, B: str) -> int:
+		la, lb = len(A), len(B)
+		for i in range(lb//la+1 if lb%la else lb//la, lb//la+3):
+			if B in A*i:
+				return i
+		return -1
+
+# 523. Continuous Subarray Sum 24.21%
+class Solution:
+	def checkSubarraySum(self, nums: List[int], k: int) -> bool:
+		l = len(nums)
+		if l < 2: return False
+		cur_sum = []
+		for num in nums:
+			cur_sum.append(cur_sum[-1]+num if cur_sum else num)
+		for i in range(1, l):
+			if not ((cur_sum[i] % k) if k else cur_sum[i]):
+				return True
+			for j in range(i-1):
+				if not (((cur_sum[i]-cur_sum[j]) % k) if k else cur_sum[i]-cur_sum[j]):
+					return True
+		return False
+class Solution: # 84.52% 牛逼
+	def checkSubarraySum(self, nums: List[int], k: int) -> bool:
+		cur_sum, m = 0, {0:-1}
+		for i, num in enumerate(nums):
+			cur_sum += num
+			if k: cur_sum %= k
+			pre = m.get(cur_sum, None)
+			if pre is not None:
+				if i-pre > 1: return True
+			else:
+				m[cur_sum] = i
+		return False
