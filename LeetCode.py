@@ -3244,3 +3244,56 @@ class Solution: # 84.52% 牛逼
 			else:
 				m[cur_sum] = i
 		return False
+
+#————————————————19/8/6———————————————————
+# 965. Univalued Binary Tree 94.39%
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+	def isUnivalTree(self, root: TreeNode) -> bool:
+		vals, stack = set(), [root]
+		while stack:
+			node = stack.pop()
+			vals.add(node.val)
+			if node.left:
+				stack.append(node.left)
+			if node.right:
+				stack.append(node.right)
+
+		return len(vals) == 1
+
+# 665. Non-decreasing Array
+class Solution: # brute force: TLE
+	def checkPossibility(self, nums: List[int]) -> bool:
+		if len(nums) < 3: return True
+
+		def helper(nums):
+			for i in range(len(nums)-1):
+				if nums[i] > nums[i+1]:
+					return False
+			return True
+
+		for i in range(len(nums)):
+			if helper(nums[:i]+nums[i+1:]):
+				return True
+		return False
+class Solution: # 57.96%
+	def checkPossibility(self, nums: List[int]) -> bool:
+		if len(nums) < 3: return True
+		
+		def helper(nums):
+			for i in range(len(nums)-1):
+				if nums[i] > nums[i+1]:
+					return False
+			return True
+		for i in range(len(nums)-1):
+			if nums[i] > nums[i+1]:
+				dl = helper(nums[:i]) and helper(nums[i+1:]) and (nums[i-1] if i else float("-inf")) <= nums[i+1]
+				dr = helper(nums[:i+1]) and helper(nums[i+2:]) and (nums[i+2] if i != len(nums)-2 else float("inf")) >= nums[i]
+				return dl or dr
+		return True

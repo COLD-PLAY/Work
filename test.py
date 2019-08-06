@@ -12,5 +12,14 @@ def test3():
 	print(a)
 	print(a[0:-1][::-1])
 
+def test4():
+	a = [23,3]
+	print(a)
+	print(a.pop())
+	print(a)
+
+def test5():
+	print(float('inf') > 10000000000)
+
 if __name__ == "__main__":
-	test3()
+	test5()
