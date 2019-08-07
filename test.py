@@ -21,5 +21,10 @@ def test4():
 def test5():
 	print(float('inf') > 10000000000)
 
+def test6():
+	a = {}
+	a[0] = a.get(0, 0)+1
+	print(a[0])
+	
 if __name__ == "__main__":
-	test5()
+	test6()

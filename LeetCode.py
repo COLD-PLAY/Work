@@ -3297,3 +3297,53 @@ class Solution: # 57.96%
 				dr = helper(nums[:i+1]) and helper(nums[i+2:]) and (nums[i+2] if i != len(nums)-2 else float("inf")) >= nums[i]
 				return dl or dr
 		return True
+
+#————————————————19/8/7———————————————————
+# 888. Fair Candy Swap
+class Solution: # brute force Time Limit Exceeded
+	def fairCandySwap(self, A: List[int], B: List[int]) -> List[int]:
+		d = sum(A) - sum(B)
+		for a in A:
+			for b in B:
+				if a-b == d//2:
+					return [a, b]
+class Solution: # 22.08%
+	def fairCandySwap(self, A: List[int], B: List[int]) -> List[int]:
+		d = (sum(A)-sum(B)) // 2
+		A, B, a, b = sorted(A), sorted(B), 0, 0
+		while True:
+			if A[a]-B[b] == d:
+				return [A[a], B[b]]
+			if A[a]-B[b] < d:
+				a += 1
+			else:
+				b += 1
+class Solution: # 81.82% ...
+	def fairCandySwap(self, A: List[int], B: List[int]) -> List[int]:
+		d = (sum(A)-sum(B)) // 2
+		setA, setB = set(A), set(B)
+		for a in setA:
+			if a-d in setB:
+				return [a, a-d]
+
+# 82. Remove Duplicates from Sorted List II
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution: # 69.38%
+	def deleteDuplicates(self, head):
+		dummy = pre = ListNode(0)
+		dummy.next = head
+		while head and head.next:
+			if head.val == head.next.val:
+				while head.next and head.val == head.next.val:
+					head = head.next
+				head = head.next
+				pre.next = head
+			else:
+				pre = pre.next
+				head = head.next
+		return dummy.next
