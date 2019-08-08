@@ -3347,3 +3347,40 @@ class Solution: # 69.38%
 				pre = pre.next
 				head = head.next
 		return dummy.next
+
+#————————————————19/8/8———————————————————
+# 896. Monotonic Series
+class Solution: # 22.79%
+	def isMonotonic(self, A: List[int]) -> bool:
+		l = len(A)
+		if l < 3: return True
+		if A[0] == A[-1]:
+			return len(set(A)) == 1
+		if A[0] < A[-1]:
+			for i in range(l-1):
+				if A[i] > A[i+1]:
+					return False
+		else:
+			for i in range(l-1):
+				if A[i] < A[i+1]:
+					return False
+		return True
+class Solution: # 19.61%
+	def isMonotonic(self, A: List[int]) -> bool:
+		if len(A) < 3: return True
+		if A[0] == A[-1]:
+			return len(set(A)) == 1
+		if A[0] < A[-1]:
+			return sorted(A) == A
+		else:
+			return sorted(A, reverse=True) == A
+
+# 1048. Longest String Chain
+class Solution: # 84.48%
+	def longestStrChain(self, words: List[str]) -> int:
+		from collections import defaultdict
+		words.sort(key=len)
+		res = {}
+		for word in words:
+			res[word] = max(res.get(word[:i]+word[i+1:], 0) for i in range(len(word))) + 1
+		return max(res.values())
