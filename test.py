@@ -25,6 +25,21 @@ def test6():
 	a = {}
 	a[0] = a.get(0, 0)+1
 	print(a[0])
-	
+
+def test7():
+	a = 10
+	print(bin(a)[2:].count('1'))
+
+def test8():
+	from functools import reduce
+	primes, res = [2, 3, 5, 7, 11, 13, 17, 19], 1
+	res = reduce(lambda x, y: x*y, primes)
+	print(res)
+
+def test9():
+	a = [[1,0], [2,0]]
+	b = a.pop([1,0])
+	print(b, a)
+
 if __name__ == "__main__":
-	test6()
+	test9()

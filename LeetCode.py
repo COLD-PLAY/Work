@@ -3350,7 +3350,7 @@ class Solution: # 69.38%
 
 #————————————————19/8/8———————————————————
 # 896. Monotonic Series
-class Solution: # 22.79%
+class Solution: # 61.91%
 	def isMonotonic(self, A: List[int]) -> bool:
 		l = len(A)
 		if l < 3: return True
@@ -3365,7 +3365,7 @@ class Solution: # 22.79%
 				if A[i] < A[i+1]:
 					return False
 		return True
-class Solution: # 19.61%
+class Solution: # 87.23%
 	def isMonotonic(self, A: List[int]) -> bool:
 		if len(A) < 3: return True
 		if A[0] == A[-1]:
@@ -3384,3 +3384,46 @@ class Solution: # 84.48%
 		for word in words:
 			res[word] = max(res.get(word[:i]+word[i+1:], 0) for i in range(len(word))) + 1
 		return max(res.values())
+
+#————————————————19/8/9———————————————————
+# 762. Prime Number of Set Bits in Binary Representation
+class Solution: # 86.01%
+	def countPrimeSetBits(self, L: int, R: int) -> int:
+		primes, res = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29], 0
+		for i in range(L, R+1):
+			if bin(i).count('1') in primes:
+				res += 1
+		return res
+class Solution: # 74.13%
+	def countPrimeSetBits(self, L: int, R: int) -> int:
+		return sum(665772 >> bin(i).count('1') & 1 for i in range(L, R+1))
+
+# 921. Minimum Add to Make Parentheses Valid
+class Solution: # 77.78%
+	def minAddToMakeValid(self, S: str) -> int:
+		stack = []
+		for c in S:
+			if c == ')' and stack and stack[-1] == '(':
+					stack.pop()
+			else: stack.append(c)
+		return len(stack)
+
+# 260. Single Number III
+class Solution: # brute force 5.13%
+	def singleNumber(self, nums: List[int]) -> List[int]:
+		res = []
+		for n in nums:
+			if n not in res:
+				res.append(n)
+			else:
+				res.remove(n)
+		return res
+class Solution: # 53.85% ??没看懂
+	def singleNumber(self, nums: List[int]) -> List[int]:
+		diff, res = 0, [0, 0]
+		for n in nums: diff ^= n
+		diff &= -diff
+		for n in nums:
+			i = n & diff
+			res[0 if i else 1] ^= n
+		return res
