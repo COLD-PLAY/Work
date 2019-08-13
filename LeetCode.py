@@ -2855,15 +2855,15 @@ class Solution: # 99.65%
 		def helper(word, pattern):
 			 d, used, new_word = dict(), set(), ''
 			 for i in range(len(word)):
-			 	if word[i] in d:
-			 		new_word += d[word[i]]
-			 	else:
-			 		if pattern[i] in used:
-			 			break
-			 		else:
-			 			d[word[i]] = pattern[i]
-			 			used.add(pattern[i])
-			 			new_word += pattern[i]
+				 if word[i] in d:
+					 new_word += d[word[i]]
+				 else:
+					 if pattern[i] in used:
+						 break
+					 else:
+						 d[word[i]] = pattern[i]
+						 used.add(pattern[i])
+						 new_word += pattern[i]
 			 return new_word == pattern
 
 		for word in words:
@@ -3427,3 +3427,48 @@ class Solution: # 53.85% ??没看懂
 			i = n & diff
 			res[0 if i else 1] ^= n
 		return res
+
+#————————————————19/8/13———————————————————
+# 653. Two Sum IV - Input is a BST
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution: # 45.32%
+	def findTarget(self, r: TreeNode, k: int) -> bool:
+		def helper(r, d):
+			if not r: return False
+			if r.val == d: return True
+			elif r.val > d: return helper(r.left, d)
+			else: return helper(r.right, d)
+		stack = []
+		if r: stack.append(r)
+		while stack:
+			p = stack.pop()
+			if p.val*2 != k and helper(r, k-p.val): return True
+			if p.left: stack.append(p.left)
+			if p.right: stack.append(p.right)
+		return False
+class Solution: # 92.45%
+	def findTarget(self, r: TreeNode, k: int) -> bool:
+		stack, hashset = [], set()
+		if r: stack.append(r)
+		while stack:
+			p = stack.pop()
+			if k-p.val in hashset: return True
+			hashset.add(p.val)
+			if p.left: stack.append(p.left)
+			if p.right: stack.append(p.right)
+		return False
+
+# 168. Excel Sheet Column Title
+class Solution: # 63.55%
+	def convertToTitle(self, n: int) -> str:
+		r = ''
+		while n:
+			r = chr(n%26+64 if n%26 else 90) + r
+			n = n//26 if n%26 else n//26-1
+		return r

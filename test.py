@@ -41,5 +41,9 @@ def test9():
 	b = a.pop([1,0])
 	print(b, a)
 
+def test10():
+	a = 65
+	print(chr(a))
+
 if __name__ == "__main__":
-	test9()
+	test10()
