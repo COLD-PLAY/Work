@@ -3472,3 +3472,38 @@ class Solution: # 63.55%
 			r = chr(n%26+64 if n%26 else 90) + r
 			n = n//26 if n%26 else n//26-1
 		return r
+
+#————————————————19/8/15———————————————————
+# 1024. Video Stitching
+class Solution: # 93.21%
+	def videoStitching(self, clips: List[List[int]], T: int) -> int:
+		pre, cur, res = -1, 0, 0
+		for i, j in sorted(clips):
+			if cur >= T or i > cur:
+				break
+			elif pre < i <= cur:
+				res, pre = res+1, cur
+			cur = max(cur, j)
+		return res if cur >= T else -1
+
+# 662. Maximum Width of Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution: # 17.07%
+	def widthOfBinaryTree(self, root: TreeNode) -> int:
+		queue = [(root, 0, 0)]
+		cur_depth = left = ans = 0
+		for node, depth, pos in queue:
+			if node:
+				queue.append((node.left, depth+1, pos*2))
+				queue.append((node.right, depth+1, pos*2+1))
+				if cur_depth != depth:
+					cur_depth = depth
+					left = pos
+				ans = max(pos-left+1, ans)
+		return ans
