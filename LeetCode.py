@@ -3507,3 +3507,46 @@ class Solution: # 17.07%
 					left = pos
 				ans = max(pos-left+1, ans)
 		return ans
+
+#————————————————19/8/16———————————————————
+# 572. Subtree of Another Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution: # 74.39%
+	def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:
+		def helper(a, b):
+			if a and b:
+				return a.val == b.val and helper(a.left, b.left) and helper(a.right, b.right)
+			return not (a or b)
+		stack = [s]
+		while stack:
+			n = stack.pop()
+			if helper(n, t): return True
+			if n.left: stack.append(n.left)
+			if n.right: stack.append(n.right)
+		return False
+
+# 648. Replace Words
+class Solution: # 38.26%
+	def replaceWords(self, words: List[str], sentence: str) -> str:
+		words, res = set(words), []
+		for word in sentence.split(' '):
+			for _ in words:
+				if _ in word and word.index(_) == 0:
+					word = _
+			res.append(word)
+		return ' '.join(res)
+class Solution: # 38.26%
+	def replaceWords(self, words: List[str], sentence: str) -> str:
+		words = set(words)
+		def helper(word):
+			for i in range(1, len(word)):
+				if word[:i] in words:
+					return word[:i]
+			return word
+		return ' '.join(map(helper, sentence.split(' ')))

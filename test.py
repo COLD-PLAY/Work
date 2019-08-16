@@ -45,5 +45,9 @@ def test10():
 	a = 65
 	print(chr(a))
 
+def test11():
+	a = "abcde"
+	print(a.index('adbc'))
+
 if __name__ == "__main__":
-	test10()
+	test11()
