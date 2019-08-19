@@ -1,7 +1,7 @@
 # 3. Longest Substring Without Repeating Characters
 class Solution:
 	def lengthOfLongestSubstring(self, s: str) -> int:
-					max = 0
+		max = 0
 		res_str = ''
 		length = len(s)
 		for i in range(length):
@@ -60,7 +60,7 @@ class Solution:
 		if str_num == 0:
 			return res
 		length = [len(str) for str in strs]
-			len = min(length)
+		len = min(length)
 		for i in range(	len):
 			for j in range(str_num - 1):
 				if strs[j][i] != strs[j + 1][i]:
@@ -580,7 +580,7 @@ class Solution:
 			if i > 0 and nums[i] == nums[i - 1]: continue
 			if nums[i] + nums[i + 1] + nums[i + 2] > target and nums[i + 3] >= 0: break
 			for j in range(i + 1, length - 2):
-				if j > i + 1 and nums[j] == nums[	]: continue
+				if j > i + 1 and nums[j] == nums[j-1]: continue
 				l = j + 1
 				r = length - 1
 				while l < r:
@@ -945,7 +945,7 @@ class Solution(object):
 		dp = [[1 for _ in range(m)] for _ in range(n)]
 		for i in range(1, n):
 			for j in range(1, m):
-				dp[i][j] = dp[i - 1][j] + dp[i][	]
+				dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
 		return dp[n - 1][m - 1]
 class Solution(object): # 76.75%
 	def uniquePaths(self, m, n):
@@ -1025,16 +1025,16 @@ class Solution(object):
 		"""
 		j, l = len(nums) - 1, len(nums)
 		while j:
-			if nums[j] > nums[	]:
+			if nums[j] > nums[j-1]:
 				break
 			j -= 1
 		if j:
-			if nums[-1] > nums[	]:
-				nums[-1], nums[	] = nums[	], nums[-1]
+			if nums[-1] > nums[j-1]:
+				nums[-1], nums[j-1] = nums[j-1], nums[-1]
 			else:
 				for i in range(j, l):
-					if nums[i] > nums[	] and nums[i + 1] <= nums[	]:
-						nums[i], nums[	] = nums[	], nums[i]
+					if nums[i] > nums[j-1] and nums[i + 1] <= nums[j-1]:
+						nums[i], nums[j-1] = nums[j-1], nums[i]
 			for i in range((l - j) // 2):
 				nums[i + j], nums[l - i - 1] = nums[l - i - 1], nums[i + j]
 		else:
@@ -1469,9 +1469,9 @@ class Solution(object): # 99.62%
 #————————————————19/4/20———————————————————
 # 595. Big Countries (it is a MySQL problem)
 # Write your MySQL query statement below
-SELECT name, population, area # 97.25%
-FROM World
-WHERE area > 3000000 OR population > 25000000
+# SELECT name, population, area # 97.25%
+# FROM World
+# WHERE area > 3000000 OR population > 25000000
 
 # 929. Unique Email Addresses
 class Solution(object): # 17.99%
@@ -2557,17 +2557,17 @@ class Solution: # 99.31% python2
 
 # 183. Customers Who Never Order
 # Write your MySQL query statement below
-SELECT C.Name Customers FROM # 27.81%
-Customers C
-Where C.Id NOT IN
-(SELECT O.CustomerId FROM
-Orders O)
-# Write your MySQL query statement below
-SELECT C.Name Customers # 89.86%
-FROM Customers C
-LEFT JOIN Orders O
-ON C.Id = O.CustomerId
-WHERE O.CustomerId IS NULL
+# SELECT C.Name Customers FROM # 27.81%
+# Customers C
+# Where C.Id NOT IN
+# (SELECT O.CustomerId FROM
+# Orders O)
+# # Write your MySQL query statement below
+# SELECT C.Name Customers # 89.86%
+# FROM Customers C
+# LEFT JOIN Orders O
+# ON C.Id = O.CustomerId
+# WHERE O.CustomerId IS NULL
 
 #————————————————19/5/16———————————————————
 # 160. Intersection of Two Linked Lists
@@ -3550,3 +3550,16 @@ class Solution: # 38.26%
 					return word[:i]
 			return word
 		return ' '.join(map(helper, sentence.split(' ')))
+
+#————————————————19/8/19———————————————————
+# 209. Minimum Size Subarray Sum
+class Solution: # 5.66%
+	def minSubArrayLen(self, s: int, nums: List[int]) -> int:
+		if sum(nums) < s: return 0
+		cur, ans, res = 0, len(nums), []
+		for n in nums:
+			cur, res = cur+n, res+[n]
+			while cur-res[0] >= s:
+				cur -= res.pop(0)
+			if cur >= s: ans = min(ans, len(res))
+		return ans

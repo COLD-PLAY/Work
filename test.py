@@ -49,5 +49,10 @@ def test11():
 	a = "abcde"
 	print(a.index('adbc'))
 
+def test12():
+	a = [213,1,123]
+	b = a.pop(2)
+	print(a, b)
+
 if __name__ == "__main__":
-	test11()
+	test12()
