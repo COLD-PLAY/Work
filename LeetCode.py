@@ -3563,3 +3563,21 @@ class Solution: # 5.66%
 				cur -= res.pop(0)
 			if cur >= s: ans = min(ans, len(res))
 		return ans
+
+#————————————————19/8/21———————————————————
+# 108. Convert Sorted Array to Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution: # 80.41%
+	def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
+		if not nums: return None
+		m = len(nums)//2
+		root = TreeNode(nums[m])
+		root.left = self.sortedArrayToBST(nums[:m])
+		root.right = self.sortedArrayToBST(nums[m+1:])
+		return root
