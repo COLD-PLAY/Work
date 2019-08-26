@@ -3581,3 +3581,10 @@ class Solution: # 80.41%
 		root.left = self.sortedArrayToBST(nums[:m])
 		root.right = self.sortedArrayToBST(nums[m+1:])
 		return root
+
+#————————————————19/8/26———————————————————
+# 349. Intersection of Two Arrays
+class Solution: # 96.29%
+	def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+		sn1, sn2 = set(nums1), set(nums2)
+		return list(sn1&sn2)

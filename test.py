@@ -54,5 +54,10 @@ def test12():
 	b = a.pop(2)
 	print(a, b)
 
+def test13():
+	a = set([1,2,3,2])
+	b = set([5,2,4,2])
+	print(a&b)
+
 if __name__ == "__main__":
-	test12()
+	test13()
