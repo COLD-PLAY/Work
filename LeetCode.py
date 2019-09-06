@@ -3588,3 +3588,13 @@ class Solution: # 96.29%
 	def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
 		sn1, sn2 = set(nums1), set(nums2)
 		return list(sn1&sn2)
+
+#————————————————19/9/6———————————————————
+# 205. Isomorphic Strings 15.00%
+class Solution:
+	def isIsomorphic(self, s: str, t: str) -> bool:
+		m1, m2 = {}, {}
+		for i in range(len(s)):
+			if m1.get(s[i], 0) != m2.get(t[i], 0): return False
+			m1[s[i]], m2[t[i]] = i+1, i+1
+		return True
