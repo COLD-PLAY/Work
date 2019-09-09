@@ -3598,3 +3598,38 @@ class Solution:
 			if m1.get(s[i], 0) != m2.get(t[i], 0): return False
 			m1[s[i]], m2[t[i]] = i+1, i+1
 		return True
+
+#————————————————19/9/9———————————————————
+# 501. Find Mode in Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution: # 99.18%
+	def findMode(self, root: TreeNode) -> List[int]:
+		if not root: return []
+		nodes, counter, maxtime, res = [root], {}, 1, []
+		while nodes:
+			node = nodes.pop()
+			if node.val not in counter: counter[node.val] = 1
+			else:
+				counter[node.val] += 1
+				maxtime = max(maxtime, counter[node.val])
+			if node.left: nodes.append(node.left)
+			if node.right: nodes.append(node.right)
+		return [num for num, count in counter.items() if count == maxtime ]
+
+# 560. Subarray Sum Equals K
+class Solution: # 75.08%
+	def subarraySum(self, nums: List[int], k: int) -> int:
+		c, s, m = 0, 0, {}
+		m[0] = 1
+		for i in range(len(nums)):
+			s += nums[i]
+			if s-k in m:
+				c += m[s-k]
+			m[s] = m.get(s, 0)+1
+		return c
