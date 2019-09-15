@@ -3632,4 +3632,26 @@ class Solution: # 75.08%
 			if s-k in m:
 				c += m[s-k]
 			m[s] = m.get(s, 0)+1
-		return c
+		return cs
+
+#————————————————19/9/15———————————————————
+# 775. Global and Local Inversions
+class Solution: # Brute Force (Time Limit Exceeded)
+	def isIdealPermutation(self, A: List[int]) -> bool:
+		for i in range(len(A)):
+			for j in range(i+2, len(A)):
+				if A[i] > A[j]:
+					return False
+		return True
+class Solution: # 53.30 %
+	def isIdealPermutation(self, A: List[int]) -> bool:
+		cur = 0
+		for i in range(len(A)-2):
+			cur = max(cur, A[i])
+			if cur > A[i+2]: return False
+		return True
+class Solution: # 95.60%
+	def isIdealPermutation(self, A: List[int]) -> bool:
+		for i, v in enumerate(A):
+			if abs(v-i) > 1: return False
+		return True
