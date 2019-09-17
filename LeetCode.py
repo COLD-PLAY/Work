@@ -3655,3 +3655,18 @@ class Solution: # 95.60%
 		for i, v in enumerate(A):
 			if abs(v-i) > 1: return False
 		return True
+
+#————————————————19/9/16———————————————————
+# 713. Subarray Product Less Than K
+class Solution: # 21.27%
+	def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
+		if not nums: return 0
+		j, cur, ans = 0, 1, 0
+		for i in range(len(nums)):
+			cur *= nums[i]
+			if cur >= k:
+				while j <= i and cur >= k:
+					cur /= nums[j]
+					j += 1
+			ans += i-j+1
+		return ans
