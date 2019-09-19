@@ -3670,3 +3670,13 @@ class Solution: # 21.27%
 					j += 1
 			ans += i-j+1
 		return ans
+
+#————————————————19/9/18———————————————————
+# 1030. Matrix Cells in Distance Order
+class Solution: # 67.84%
+	def allCellsDistOrder(self, R: int, C: int, r0: int, c0: int) -> List[List[int]]:
+		res = []
+		for r in range(R):
+			for c in range(C):
+				res.append([r, c])
+		return sorted(res, key=lambda point: abs(point[0]-r0)+abs(point[1]-c0))

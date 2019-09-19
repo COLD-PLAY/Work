@@ -59,5 +59,11 @@ def test13():
 	b = set([5,2,4,2])
 	print(a&b)
 
+def test14():
+	res = [[1, 2], [3, 2], [4, 1]]
+	r0, c0 = 4, 1
+	res = sorted(res, key=lambda point: abs(point[0]-r0)+abs(point[1]-c0))
+	print(res)
+
 if __name__ == "__main__":
-	test13()
+	test14()
