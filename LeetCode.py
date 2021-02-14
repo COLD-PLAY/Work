@@ -3285,7 +3285,7 @@ class Solution: # brute force: TLE
 class Solution: # 57.96%
 	def checkPossibility(self, nums: List[int]) -> bool:
 		if len(nums) < 3: return True
-		
+
 		def helper(nums):
 			for i in range(len(nums)-1):
 				if nums[i] > nums[i+1]:
@@ -3680,3 +3680,9 @@ class Solution: # 67.84%
 			for c in range(C):
 				res.append([r, c])
 		return sorted(res, key=lambda point: abs(point[0]-r0)+abs(point[1]-c0))
+
+#————————————————20/1/14———————————————————
+# 81. Search in Rotated Sorted Array II
+class Solution:
+	def search(self, nums: List[int], target: int) -> bool:
+		pass
